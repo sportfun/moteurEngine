@@ -347,3 +347,7 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# remove dist/ file wich is our "transpiled" directory
+
+dist/
