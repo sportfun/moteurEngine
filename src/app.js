@@ -1,4 +1,7 @@
-import Scene from "./Scene";
+/**
+ * Created by JanJan on 10/06/2017.
+ */
+
 var THREE = require("three");
 
 var scene = new THREE.Scene();
@@ -52,13 +55,48 @@ function loadModels(path, ext, pos, rot) {
     let loaders = {
       'obj': function (path, pos, rot)
       {
+          let   loader = new THREE.OBJLoader();
+
+          loader.load(
+              path,
+              function(object)
+              {
+                  object.position = pos;
+                  object.rotation = rot;
+                  scene.add(object);
+
+              }
+          )
       },
       'dae': function (path, pos, rot)
       {
+          let   loader = new THREE.ColladaLoader();
 
+          loader.load(
+              path,
+              function(object)
+              {
+                  object.position = pos;
+                  object.rotation = rot;
+                  scene.add(object);
+
+              }
+          )
       },
       'fbx': function(path, pos, rot)
       {
+          let   loader = new THREE.FBXLoader();
+
+          loader.load(
+              path,
+              function(object)
+              {
+                  object.position = pos;
+                  object.rotation = rot;
+                  scene.add(object);
+
+              }
+          )
       },
     };
     loaders[extension](path, pos, rot)
