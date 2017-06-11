@@ -4,5 +4,27 @@
 
 var THREE = require("three-js");
 
-var nums = [1,2,3];
-var doubleNums = nums.map((e) => e * 2);
+function loadModels(path, ext) {
+    let extension = undefined;
+
+    if (path === "" || path === undefined)
+    {
+        alert("app.js loadModels() parameters incorrect.");
+        return(undefined);
+    }
+    if (ext === "" || ext === undefined)
+        extension = path.split(".")[1];
+    let loaders = {
+      'obj': function (path)
+      {
+      },
+      'dae': function (path)
+      {
+
+      },
+      'fbx': function(path)
+      {
+      },
+    };
+    loaders[extension](path)
+}
