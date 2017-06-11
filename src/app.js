@@ -2,10 +2,12 @@
  * Created by JanJan on 10/06/2017.
  */
 
-var THREE = require("three-js");
+var THREE = require("three");
 
-function loadModels(path, ext) {
+function loadModels(path, ext, pos, rot) {
     let extension = undefined;
+    pos = pos || THREE.Vector3(0, 0, 0);
+    rot = rot ||THREE.Vector3(0, 0, 0);
 
     if (path === "" || path === undefined)
     {
@@ -15,16 +17,16 @@ function loadModels(path, ext) {
     if (ext === "" || ext === undefined)
         extension = path.split(".")[1];
     let loaders = {
-      'obj': function (path)
+      'obj': function (path, pos, rot)
       {
       },
-      'dae': function (path)
+      'dae': function (path, pos, rot)
       {
 
       },
-      'fbx': function(path)
+      'fbx': function(path, pos, rot)
       {
       },
     };
-    loaders[extension](path)
+    loaders[extension](path, pos, rot)
 }
