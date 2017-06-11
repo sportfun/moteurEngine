@@ -1,8 +1,9 @@
-/**
- * Created by JanJan on 10/06/2017.
- */
+import Scene from "./Scene";
 
 var THREE = require("three");
+
+let scene = new Scene("test");
+scene.Clean();
 
 function loadModels(path, ext, pos, rot) {
     let extension = undefined;
