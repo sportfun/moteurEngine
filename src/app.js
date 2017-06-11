@@ -2,6 +2,8 @@
  * Created by JanJan on 10/06/2017.
  */
 
+"use strict"
+
 var THREE = require("three");
 
 var scene = new THREE.Scene();
@@ -64,7 +66,6 @@ function loadModels(path, ext, pos, rot) {
                   object.position = pos;
                   object.rotation = rot;
                   scene.add(object);
-
               }
           )
       },
@@ -79,7 +80,6 @@ function loadModels(path, ext, pos, rot) {
                   object.position = pos;
                   object.rotation = rot;
                   scene.add(object);
-
               }
           )
       },
@@ -94,7 +94,6 @@ function loadModels(path, ext, pos, rot) {
                   object.position = pos;
                   object.rotation = rot;
                   scene.add(object);
-
               }
           )
       },
