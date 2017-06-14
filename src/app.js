@@ -42,8 +42,9 @@ function component () {
 
 document.body.appendChild(component());
 
-function loadModels(path, ext, pos, rot) {
+function loadModels(path, texture, ext, pos, rot) {
     let extension = undefined;
+    texture = texture ||undefined;
     pos = pos || THREE.Vector3(0, 0, 0);
     rot = rot ||THREE.Vector3(0, 0, 0);
 
@@ -55,7 +56,7 @@ function loadModels(path, ext, pos, rot) {
     if (ext === "" || ext === undefined)
         extension = path.split(".")[1];
     let loaders = {
-      'obj': function (path, pos, rot)
+      'obj': function (path, texture, pos, rot)
       {
           let   loader = new THREE.OBJLoader();
 
@@ -63,13 +64,21 @@ function loadModels(path, ext, pos, rot) {
               path,
               function(object)
               {
+                  if (texture !== undefined)
+                  {
+                      let textureLoader = THREE.TextureLoader;
+                      textureLoader.load(textures, function(textures)
+                      {
+                         let mat = new THREE.MeshBasicMaterial({map: textures});
+                      });
+                  }
                   object.position = pos;
                   object.rotation = rot;
                   scene.add(object);
               }
           )
       },
-      'dae': function (path, pos, rot)
+      'dae': function (path, texture, pos, rot)
       {
           let   loader = new THREE.ColladaLoader();
 
@@ -77,13 +86,21 @@ function loadModels(path, ext, pos, rot) {
               path,
               function(object)
               {
+                  if (texture !== undefined)
+                  {
+                      let textureLoader = THREE.TextureLoader;
+                      textureLoader.load(textures, function(textures)
+                      {
+                          let mat = new THREE.MeshBasicMaterial({map: textures});
+                      });
+                  }
                   object.position = pos;
                   object.rotation = rot;
                   scene.add(object);
               }
           )
       },
-      'fbx': function(path, pos, rot)
+      'fbx': function(path, texture, pos, rot)
       {
           let   loader = new THREE.FBXLoader();
 
@@ -91,12 +108,64 @@ function loadModels(path, ext, pos, rot) {
               path,
               function(object)
               {
+                  if (texture !== undefined)
+                  {
+                      let textureLoader = THREE.TextureLoader;
+                      textureLoader.load(textures, function(textures)
+                      {
+                          let mat = new THREE.MeshBasicMaterial({map: textures});
+                      });
+                  }
                   object.position = pos;
                   object.rotation = rot;
                   scene.add(object);
               }
           )
       },
+    'json': function(path, texture, pos, rot)
+    {
+        let   loader = new THREE.FBXLoader();
+
+        loader.load(
+            path,
+            function(object)
+            {
+                if (texture !== undefined)
+                {
+                    let textureLoader = THREE.TextureLoader;
+                    textureLoader.load(textures, function(textures)
+                    {
+                        let mat = new THREE.MeshBasicMaterial({map: textures});
+                    });
+                }
+                object.position = pos;
+                object.rotation = rot;
+                scene.add(object);
+            }
+        )
+    },
+    'js': function(path, texture, pos, rot)
+    {
+        let   loader = new THREE.FBXLoader();
+
+        loader.load(
+            path,
+            function(object)
+            {
+                if (texture !== undefined)
+                {
+                    let textureLoader = THREE.TextureLoader;
+                    textureLoader.load(textures, function(textures)
+                    {
+                        let mat = new THREE.MeshBasicMaterial({map: textures});
+                    });
+                }
+                object.position = pos;
+                object.rotation = rot;
+                scene.add(object);
+            }
+        )
+    }
     };
-    loaders[extension](path, pos, rot)
+    loaders[extension](path, texture, pos, rot);
 }
