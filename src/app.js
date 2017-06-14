@@ -130,14 +130,6 @@ function loadModels(path, texture, ext, pos, rot) {
             path,
             function(object)
             {
-                if (texture !== undefined)
-                {
-                    let textureLoader = THREE.TextureLoader;
-                    textureLoader.load(textures, function(textures)
-                    {
-                        let mat = new THREE.MeshBasicMaterial({map: textures});
-                    });
-                }
                 object.position = pos;
                 object.rotation = rot;
                 scene.add(object);
@@ -152,14 +144,6 @@ function loadModels(path, texture, ext, pos, rot) {
             path,
             function(object)
             {
-                if (texture !== undefined)
-                {
-                    let textureLoader = THREE.TextureLoader;
-                    textureLoader.load(textures, function(textures)
-                    {
-                        let mat = new THREE.MeshBasicMaterial({map: textures});
-                    });
-                }
                 object.position = pos;
                 object.rotation = rot;
                 scene.add(object);
