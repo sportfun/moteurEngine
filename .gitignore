@@ -325,6 +325,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+# !node_modules/.bin/
 jspm_packages/
 
 # Typescript v1 declaration files
@@ -351,3 +352,6 @@ typings/
 # remove dist/ file wich is our "transpiled" directory
 
 dist/
+
+# node_modules/.bin/*
+# !node_modules/.bin/webpack

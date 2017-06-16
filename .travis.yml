@@ -7,7 +7,7 @@ cache:
     - "node_modules"
 
 install:
-  - npm install -g webpack
+  - npm install
 
 script:
   - npm run build
