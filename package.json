@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d dist && .\\node_modules\\.bin\\webpack"
+    "build": "babel src -d dist && .\\node_modules\\.bin\\webpack --display-error-details"
   },
   "repository": {
     "type": "git",

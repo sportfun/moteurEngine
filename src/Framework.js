@@ -1,7 +1,7 @@
 'use strict';
 
 var THREE = require('three');
-import Scene from 'Scene.js';
+import Scene from '../src/Scene.js';
 
 class Framework {
 
@@ -9,16 +9,26 @@ class Framework {
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(this.renderer.domElement);
+        this.clock = new THREE.Clock();
         this.scenes = [];
         this.currentScene = undefined;
+        console.log('Framework successfully created');
     }
 
     Clean() {
+        this.scenes.forEach(function(scene) {
+            scene.Clean();
+        }, this);
+        delete (this.scenes); // not sure about this one
+
+        delete (this.clock);
         delete (this.renderer);
+        console.log('Framework successfully deleted');
     }
 
     Render() {
-        requestAnimationFrame(this.Render);
+        requestAnimationFrame(() => this.Render()); // Just passing this.Render caused a 'not defined'
+        this.currentScene.Update(this.clock.getDelta());
         this.renderer.render(this.currentScene.threeObject, this.currentScene.camera.threeObject);
     }
 
