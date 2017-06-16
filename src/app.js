@@ -2,9 +2,9 @@
  * Created by JanJan on 10/06/2017.
  */
 
-"use strict"
+'use strict';
 
-var THREE = require("three");
+var THREE = require('three');
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -31,13 +31,13 @@ var render = function () {
 
 render();
 
-let scene2 = new Scene("test");
+let scene2 = new Scene('test');
 scene2.Clean();
 
 function component () {
-  var element = document.createElement('div');
-  element.innerHTML = 'Hello world';
-  return (element);
+    var element = document.createElement('div');
+    element.innerHTML = 'Hello world';
+    return (element);
 }
 
 document.body.appendChild(component());
@@ -48,13 +48,13 @@ function loadModels(path, texture, ext, pos, rot) {
     pos = pos || THREE.Vector3(0, 0, 0);
     rot = rot ||THREE.Vector3(0, 0, 0);
 
-    if (path === "" || path === undefined)
+    if (path === '' || path === undefined)
     {
-        alert("app.js loadModels() parameters incorrect.");
+        alert('app.js loadModels() parameters incorrect.');
         return(undefined);
     }
-    if (ext === "" || ext === undefined)
-        extension = path.split(".")[1];
+    if (ext === '' || ext === undefined)
+        extension = path.split('.')[1];
     let loaders = {
       'obj': function (path, texture, pos, rot)
       {
