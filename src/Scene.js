@@ -3,21 +3,23 @@
 var THREE = require('three');
 import Camera from '../src/Camera.js';
 
+var threeSceneSymbol = Symbol();
+var mainCameraSymbol = Symbol();
 class Scene {
 
     get threeObject() {
-        return (this.threeScene);
+        return (this[threeSceneSymbol]);
     }
 
     get camera() {
-        return (this.mainCamera);
+        return (this[mainCameraSymbol]);
     }
 
     // param: string
     constructor(name) {
         this.name = name;
-        this.threeScene = new THREE.Scene();
-        this.mainCamera = undefined;
+        this[threeSceneSymbol] = new THREE.Scene();
+        this[mainCameraSymbol] = undefined;
         this.cameras = [];
         console.log('Scene ' + this.name + ' successfully created');
 
@@ -25,7 +27,10 @@ class Scene {
         this.geometry = new THREE.BoxGeometry(1, 1, 1);
         this.material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
         this.cube = new THREE.Mesh(this.geometry, this.material);
-        this.threeScene.add(this.cube);
+        this.cube.rotation.x = 45;
+        this.cube.rotation.y = 45;
+        //this.cube.position.xset(new THREE.Vector3(1, 1, 1));
+        this[threeSceneSymbol].add(this.cube);
 
         // End of Temporary code
     }
@@ -36,7 +41,7 @@ class Scene {
         }, this);
         delete (this.cameras); // not sure
 
-        delete (this.threeScene);
+        delete (this[threeSceneSymbol]);
         console.log('Scene ' + this.name + ' successfully deleted');
     }
 
@@ -44,10 +49,19 @@ class Scene {
     // elapsedDeltaTime is the time passed since last frame in milliseconds
     // param: float
     Update(elapsedDeltaTime) {
-        // Start of Temporary code
-        this.cube.rotation.x += 1 * elapsedDeltaTime;
-        this.cube.rotation.y += 1 * elapsedDeltaTime;
-        // End of Temporary code
+        var angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
+
+        var deltaX = this[mainCameraSymbol].GetPosition().x - this.cube.position.x;
+        var deltaY = this[mainCameraSymbol].GetPosition().z - this.cube.position.z;
+
+        var angleCos = Math.cos(angle);
+        var angleSin = Math.sin(angle);
+
+        var posX = angleCos * deltaX - angleSin * deltaY + this.cube.position.x;
+        var posY = angleSin * deltaX + angleCos * deltaY + this.cube.position.z;
+
+        this[mainCameraSymbol].SetPosition(new THREE.Vector3(posX, 1, posY));
+        this[mainCameraSymbol].threeObject.lookAt(this.cube.position);
     }
 
     AddModel(model) {
@@ -56,8 +70,8 @@ class Scene {
     // param: Camera
     AddCamera(camera) {
         if (typeof camera !== 'undefined' && camera instanceof Camera) { // Check if camera is declared and is a Camera object
-            if (this.mainCamera === undefined) // Set the camera used for rendering if there's none
-                this.mainCamera = camera;
+            if (this[mainCameraSymbol] === undefined) // Set the camera used for rendering if there's none
+                this[mainCameraSymbol] = camera;
             this.cameras.push(camera);
         }
     }
