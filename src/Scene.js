@@ -61,7 +61,7 @@ class Scene {
         var posY = angleSin * deltaX + angleCos * deltaY + this.cube.position.z;
 
         this[mainCameraSymbol].SetPosition(new THREE.Vector3(posX, 1, posY));
-        this[mainCameraSymbol].threeObject.lookAt(this.cube.position);
+        this[mainCameraSymbol].LookAt(this.cube);
     }
 
     AddModel(model) {

@@ -23,6 +23,17 @@ class Camera extends Object {
         console.log('Camera: Successfully deleted');
     }
 
+    // param: Vector3
+    // Make the camera look at the given position
+    LookAt(target) {
+        if (target instanceof THREE.Object3D)
+            this[threeCameraSymbol].lookAt(target.position);
+        else if (target instanceof THREE.Vector3)
+            this[threeCameraSymbol].lookAt(target);
+        else
+            console.log('Camera: LookAt\'s target is not valid');
+    }
+
     // param: number
     // Set the camera's field of view (FOV)
     SetFOV(fov) {
