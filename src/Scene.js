@@ -67,7 +67,10 @@ class Scene {
         }
     }
 
+    // param: number
+    // Change the background color of the scene
     SetBackgroundColor(color) {
+        this[threeSceneSymbol].background = new THREE.Color(color);
     }
 
     SetBackgroundTexture(texture) {

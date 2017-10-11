@@ -10,6 +10,7 @@ let framework = new Framework();
 
 let currentScene = framework.CreateScene('Test scene');
 framework.UseScene(currentScene);
+currentScene.SetBackgroundColor(0xff0000);
 
 let camera = new Camera();
 camera.SetPosition(new THREE.Vector3(10, 3, 10));
