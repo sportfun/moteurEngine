@@ -23,6 +23,11 @@ class Camera extends Object {
         console.log('Camera: Successfully deleted');
     }
 
+    Update(elapsedDeltaTime) {
+        if (typeof this.UpdateOverride === 'function')
+            this.UpdateOverride(elapsedDeltaTime);
+    }
+
     // param: Vector3
     // Make the camera look at the given position
     LookAt(target) {
