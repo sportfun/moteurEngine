@@ -1,6 +1,7 @@
 'use strict';
 
 var THREE = require('three');
+
 import Scene from '../src/Scene.js';
 
 class Framework {
