@@ -15,6 +15,18 @@ camera.SetPosition(new THREE.Vector3(10, 3, 10));
 currentScene.AddCamera(camera);
 
 currentScene.Update = function (elapsedDeltaTime) {
+
+let geometry = new THREE.BoxGeometry(1, 1, 1);
+
+let material = new Material();
+material.SetTransparent(false);
+material.SetOpacity(0.5);
+
+let cube = new THREE.Mesh(geometry, material.threeObject);
+cube.rotation.x = 45;
+cube.rotation.y = 45;
+currentScene.AddModel(cube);
+
     var angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
 
     var deltaX = camera.GetPosition().x - this.cube.position.x;

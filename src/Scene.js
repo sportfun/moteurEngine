@@ -23,17 +23,6 @@ class Scene {
         this[mainCameraSymbol] = undefined;
         this.cameras = [];
         console.log('Scene ' + this.name + ' successfully created');
-
-        // Start of Temporary code
-        this.geometry = new THREE.BoxGeometry(1, 1, 1);
-        this.material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        this.cube = new THREE.Mesh(this.geometry, this.material);
-        this.cube.rotation.x = 45;
-        this.cube.rotation.y = 45;
-        //this.cube.position.xset(new THREE.Vector3(1, 1, 1));
-        this[threeSceneSymbol].add(this.cube);
-
-        // End of Temporary code
     }
 
     Clean() {
