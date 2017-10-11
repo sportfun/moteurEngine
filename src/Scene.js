@@ -22,6 +22,7 @@ class Scene {
         this[threeSceneSymbol] = new THREE.Scene();
         this[mainCameraSymbol] = undefined;
         this.cameras = [];
+        this.objects = [];
         console.log('Scene ' + this.name + ' successfully created');
     }
 
@@ -42,6 +43,9 @@ class Scene {
     }
 
     AddModel(model) {
+        // TODO(BoraxKid): Check model before continuing
+        this.objects.push(model);
+        this[threeSceneSymbol].add(model);
     }
 
     // param: Camera
