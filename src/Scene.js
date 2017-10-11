@@ -1,6 +1,7 @@
 'use strict';
 
 var THREE = require('three');
+
 import Camera from '../src/Camera.js';
 
 var threeSceneSymbol = Symbol();
@@ -49,19 +50,6 @@ class Scene {
     // elapsedDeltaTime is the time passed since last frame in milliseconds
     // param: float
     Update(elapsedDeltaTime) {
-        var angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
-
-        var deltaX = this[mainCameraSymbol].GetPosition().x - this.cube.position.x;
-        var deltaY = this[mainCameraSymbol].GetPosition().z - this.cube.position.z;
-
-        var angleCos = Math.cos(angle);
-        var angleSin = Math.sin(angle);
-
-        var posX = angleCos * deltaX - angleSin * deltaY + this.cube.position.x;
-        var posY = angleSin * deltaX + angleCos * deltaY + this.cube.position.z;
-
-        this[mainCameraSymbol].SetPosition(new THREE.Vector3(posX, 1, posY));
-        this[mainCameraSymbol].LookAt(this.cube);
     }
 
     AddModel(model) {
