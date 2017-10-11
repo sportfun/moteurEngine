@@ -36,10 +36,20 @@ class Scene {
         console.log('Scene ' + this.name + ' successfully deleted');
     }
 
+    // param: float
     // Called every frame by Framework if the scene is in use
     // elapsedDeltaTime is the time passed since last frame in milliseconds
-    // param: float
     Update(elapsedDeltaTime) {
+        this.cameras.forEach(function(camera) {
+            if (typeof camera.Update === 'function')
+                camera.Update(elapsedDeltaTime);
+        }, this);
+        this.objects.forEach(function(object) {
+            if (typeof object.Update === 'function')
+                object.Update(elapsedDeltaTime);
+        }, this);
+        if (typeof this.UpdateOverride === 'function')
+            this.UpdateOverride(elapsedDeltaTime);
     }
 
     AddModel(model) {
