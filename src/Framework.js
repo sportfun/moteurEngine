@@ -8,7 +8,8 @@ class Framework {
 
     constructor() {
         this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.OnWindowResize();
+        window.addEventListener('resize', event => this.OnWindowResize(event), false);
         document.body.appendChild(this.renderer.domElement);
         this.clock = new THREE.Clock();
         this.scenes = [];
@@ -48,6 +49,15 @@ class Framework {
         if (!(scene instanceof Scene)) // Check if scene is a Scene object
             return;
         this.currentScene = scene;
+    }
+
+    OnWindowResize(event) {
+        this.screenWidth = window.innerWidth;
+        this.screenHeight = window.innerHeight;
+        this.aspect = this.screenWidth / this.screenHeight;
+        this.renderer.setSize(this.screenWidth, this.screenHeight);
+
+        // TODO(BoraxKid): Update projection matrix of cameras;
     }
 }
 
