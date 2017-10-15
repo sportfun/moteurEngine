@@ -5,11 +5,20 @@
 
 let THREE = require('three');
 
+let GPUParticleSystem = require('../src/GPUParticleSystem.js');
+
 import Framework from '../src/Framework.js';
 import Camera from '../src/Camera.js';
 import Material from '../src/Material.js';
+import ParticleSystem from '../src/ParticleSystem.js';
 
 let framework = new Framework();
+
+
+let tick = 0;
+let colors = [0xaa88ff,0xff7711,0x44cc99];
+let clock = new THREE.Clock(true);
+
 
 let currentScene = framework.CreateScene('Test scene');
 framework.UseScene(currentScene);
@@ -31,8 +40,31 @@ cube.rotation.y = 45;
 
 currentScene.AddModel(cube);
 
+let options = {
+    position: new THREE.Vector3(),
+    positionRandomness: .3,
+    velocity: new THREE.Vector3(),
+    velocityRandomness: .5,
+    color: 0x00ff00,
+    colorRandomness: 0,
+    turbulence: .5,
+    lifetime: 2,
+    size: 5,
+    sizeRandomness: 1
+};
+let spawnerOptions = {
+    spawnRate: 15000,
+    horizontalSpeed: 1.5,
+    verticalSpeed: 1.33,
+    timeScale: 1
+};
+
+let particleSystem = new ParticleSystem(250000, options, spawnerOptions);
+currentScene.AddModel(particleSystem.threeObject);
+
 camera.UpdateOverride = function (elapsedDeltaTime) {
     let angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
+    let delta = clock.getDelta() * particleSystem.spawnerOptions.timeScale;
 
     let deltaX = this.GetPosition().x - cube.position.x;
     let deltaY = this.GetPosition().z - cube.position.z;
@@ -43,7 +75,24 @@ camera.UpdateOverride = function (elapsedDeltaTime) {
     let posX = angleCos * deltaX - angleSin * deltaY + cube.position.x;
     let posY = angleSin * deltaX + angleCos * deltaY + cube.position.z;
 
-    this.SetPosition(new THREE.Vector3(posX, 1, posY));
+    tick += delta;
+    if (tick < 0) tick = 0;
+    if (delta > 0) {
+  
+      for(var c in colors) {
+        var p = colors[c];
+        options.color = p;
+        particleSystem.options.position.x = Math.sin(tick + (Math.PI * 0.5 * c) * particleSystem.spawnerOptions.horizontalSpeed) * 40;
+        particleSystem.options.position.y = Math.cos(tick + (Math.PI * 0.5 * c) * particleSystem.spawnerOptions.verticalSpeed) * 20;
+        particleSystem.options.position.z = Math.sin(tick + (Math.PI * 0.5 * c) * particleSystem.spawnerOptions.horizontalSpeed + particleSystem.spawnerOptions.verticalSpeed) * 5;
+        for (var x = 0; x < spawnerOptions.spawnRate * delta; x++) {
+          particleSystem.threeObject.spawnParticle(particleSystem.Options);;
+        }
+      }
+  
+    }
+    particleSystem.threeObject.update(tick);
+    //this.SetPosition(new THREE.Vector3(posX, 1, posY));
     this.LookAt(cube);
 };
 
