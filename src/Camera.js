@@ -1,10 +1,10 @@
 'use strict';
 
-var THREE = require('three');
+let THREE = require('three');
 
 import Object from '../src/Object.js';
 
-var threeCameraSymbol = Symbol();
+let threeCameraSymbol = Symbol();
 class Camera extends Object {
 
     get threeObject() {

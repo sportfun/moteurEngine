@@ -1,8 +1,8 @@
 'use strict';
 
-var THREE = require('three');
+let THREE = require('three');
 
-var threeMaterialSymbol = Symbol();
+let threeMaterialSymbol = Symbol();
 class Material {
 
     get threeObject() {

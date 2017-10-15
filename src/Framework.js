@@ -1,6 +1,6 @@
 'use strict';
 
-var THREE = require('three');
+let THREE = require('three');
 
 import Scene from '../src/Scene.js';
 
@@ -52,7 +52,7 @@ class Framework {
     }
 
     // Handle resizing of the window
-    OnWindowResize(event) { // eslint-disable-line no-unused-vars
+    OnWindowResize(event) { // eslint-disable-line no-unused-lets
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
         this.aspect = this.screenWidth / this.screenHeight;

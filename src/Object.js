@@ -2,7 +2,7 @@
 
 let THREE = require('three');
 
-var threeObject3DSymbol = Symbol();
+let threeObject3DSymbol = Symbol();
 class Object {
 
     get threeObject() {

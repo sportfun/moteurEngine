@@ -1,6 +1,6 @@
 'use strict';
 
-var THREE = require('three');
+let THREE = require('three');
 
 class Audio {
     constructor() {
@@ -95,11 +95,11 @@ class Audio {
         }
     }
 
-    OnLoadAudioProgress(xhr) { // eslint-disable-line no-unused-vars
+    OnLoadAudioProgress(xhr) { // eslint-disable-line no-unused-lets
 
     }
 
-    OnLoadAudioError(xhr, filePath) { // eslint-disable-line no-unused-vars
+    OnLoadAudioError(xhr, filePath) { // eslint-disable-line no-unused-lets
         console.error('Audio::OnLoadAudioError: error loading \'filePath\' (' + filePath + ')');
     }
 }

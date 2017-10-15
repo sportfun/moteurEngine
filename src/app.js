@@ -3,7 +3,7 @@
 // In case someone need to test an image and get a DOMException, use this
 // let imageData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA50lEQVR4nO3asU0DURQF0Q1W7sEJDawsETihD6jBmQOn7oGAjBqgDxJSN0AjuIgXHMmaye/XaLTJSm/dX5//lwGvbz+T+fL99TLa/x0Po/06Wj8ABdACmgJoAU0BtICmAFpAUwAtoCmAFtAUQAto1tvnNnpgW2b/8+fd+2j/9HsZ7fsCtICmAFpAUwAtoCmAFtAUQAtoCqAFNAXQApoCbKfb6IHpfcBH9wGWAmgBTQG0gKYAWkBTAC2gKYAW0BRAC2gKoAU03QeM1g9AAbSApgBaQFMALaApgBbQFEALaAqgBTQF0AKaOxbSFU3wi7H8AAAAAElFTkSuQmCC';
 
-var THREE = require('three');
+let THREE = require('three');
 
 import Framework from '../src/Framework.js';
 import Camera from '../src/Camera.js';
@@ -32,16 +32,16 @@ cube.rotation.y = 45;
 currentScene.AddModel(cube);
 
 camera.UpdateOverride = function (elapsedDeltaTime) {
-    var angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
+    let angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
 
-    var deltaX = this.GetPosition().x - cube.position.x;
-    var deltaY = this.GetPosition().z - cube.position.z;
+    let deltaX = this.GetPosition().x - cube.position.x;
+    let deltaY = this.GetPosition().z - cube.position.z;
 
-    var angleCos = Math.cos(angle);
-    var angleSin = Math.sin(angle);
+    let angleCos = Math.cos(angle);
+    let angleSin = Math.sin(angle);
 
-    var posX = angleCos * deltaX - angleSin * deltaY + cube.position.x;
-    var posY = angleSin * deltaX + angleCos * deltaY + cube.position.z;
+    let posX = angleCos * deltaX - angleSin * deltaY + cube.position.x;
+    let posY = angleSin * deltaX + angleCos * deltaY + cube.position.z;
 
     this.SetPosition(new THREE.Vector3(posX, 1, posY));
     this.LookAt(cube);

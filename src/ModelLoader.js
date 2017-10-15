@@ -1,6 +1,6 @@
 'use strict';
 
-var THREE = require('three');
+let THREE = require('three');
 
 function loadModels(path, texture, ext, pos, rot) {
     let extension = undefined;
