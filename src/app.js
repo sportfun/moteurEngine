@@ -1,5 +1,8 @@
 'use strict';
 
+// In case someone need to test an image and get a DOMException, use this
+// let imageData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA50lEQVR4nO3asU0DURQF0Q1W7sEJDawsETihD6jBmQOn7oGAjBqgDxJSN0AjuIgXHMmaye/XaLTJSm/dX5//lwGvbz+T+fL99TLa/x0Po/06Wj8ABdACmgJoAU0BtICmAFpAUwAtoCmAFtAUQAto1tvnNnpgW2b/8+fd+2j/9HsZ7fsCtICmAFpAUwAtoCmAFtAUQAtoCqAFNAXQApoCbKfb6IHpfcBH9wGWAmgBTQG0gKYAWkBTAC2gKYAW0BRAC2gKoAU03QeM1g9AAbSApgBaQFMALaApgBbQFEALaAqgBTQF0AKaOxbSFU3wi7H8AAAAAElFTkSuQmCC';
+
 var THREE = require('three');
 
 import Framework from '../src/Framework.js';
@@ -10,7 +13,7 @@ let framework = new Framework();
 
 let currentScene = framework.CreateScene('Test scene');
 framework.UseScene(currentScene);
-currentScene.SetBackgroundColor(0xff0000);
+currentScene.SetBackgroundColor(0x34495e);
 
 let camera = new Camera();
 camera.SetPosition(new THREE.Vector3(10, 3, 10));

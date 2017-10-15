@@ -70,13 +70,55 @@ class Scene {
     // param: number
     // Change the background color of the scene
     SetBackgroundColor(color) {
-        this[threeSceneSymbol].background = new THREE.Color(color);
+        if (typeof color === 'undefined') {
+            console.error('Scene::SetBackgroundColor: color undefined');
+            return;
+        }
+        if (typeof color === 'number') {
+            this[threeSceneSymbol].background = new THREE.Color(color);
+        }
+        else if (color instanceof THREE.Color) {
+            this[threeSceneSymbol].background = color;
+        }
+        else {
+            console.warn('Scene::SetBackgroundColor: can\'t handle type ' + typeof color + ' of \'color\'');
+            console.debug(color);
+            console.log(color);
+        }
     }
 
+    // param: THREE.Texture
+    // Change the background texture of the scene
     SetBackgroundTexture(texture) {
+        if (typeof texture === 'undefined') {
+            console.error('Scene::SetBackgroundTexture: texture undefined');
+            return;
+        }
+        if (texture instanceof THREE.Texture) {
+            this[threeSceneSymbol].background = texture;
+        }
+        else if (typeof texture === 'string') {
+            console.log('Scene::SetBackgroundTexture: \'texture\' is of type string and may not be loaded properly.');
+            this[threeSceneSymbol].background = new THREE.TextureLoader().load(texture);
+        }
+        else {
+            console.warn('Scene::SetBackgroundTexture: can\'t handle type ' + typeof texture + ' of \'texture\'');
+        }
     }
-    
+
+    // param: THREE.CubeTexture
+    // Change the background cube texture of the scene
     SetBackgroundCubeTexture(cubeTexture) {
+        if (typeof cubeTexture === 'undefined') {
+            console.error('Scene::SetBackgroundCubeTexture: cubeTexture undefined');
+            return;
+        }
+        if (cubeTexture instanceof THREE.CubeTexture) {
+            this[threeSceneSymbol].background = cubeTexture;
+        }
+        else {
+            console.warn('Scene::SetBackgroundCubeTexture: can\'t handle type ' + typeof cubeTexture + ' of \'cubeTexture\'');
+        }
     }
 }
 
