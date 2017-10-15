@@ -19,7 +19,6 @@ let camera = new Camera();
 camera.SetPosition(new THREE.Vector3(10, 3, 10));
 currentScene.AddCamera(camera);
 
-
 let geometry = new THREE.BoxGeometry(1, 1, 1);
 
 let material = new Material();
@@ -29,6 +28,7 @@ material.SetOpacity(0.5);
 let cube = new THREE.Mesh(geometry, material.threeObject);
 cube.rotation.x = 45;
 cube.rotation.y = 45;
+
 currentScene.AddModel(cube);
 
 camera.UpdateOverride = function (elapsedDeltaTime) {

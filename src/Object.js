@@ -1,5 +1,7 @@
 'use strict';
 
+let THREE = require('three');
+
 var threeObject3DSymbol = Symbol();
 class Object {
 
@@ -70,6 +72,16 @@ class Object {
         this[threeObject3DSymbol].scale.z += scale.z;
     }
 
+    // param: THREE.PositionalAudio
+    // Add a positional audio the the object
+    AddPositionalAudio(audio) {
+        if (typeof audio !== 'undefined' && audio instanceof THREE.PositionalAudio) {
+            this[threeObject3DSymbol].add(audio);
+        }
+        else {
+            console.error('Object::AddPositionalAudio: \'audio\' is undefined or not of type THREE.PositionalAudio');
+        }
+    }
 }
 
 export default Object;

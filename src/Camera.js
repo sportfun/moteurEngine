@@ -23,6 +23,9 @@ class Camera extends Object {
         console.log('Camera: Successfully deleted');
     }
 
+    // param: number
+    // Called every frame, update the state of the camera
+    // Override 'UpdateOverride' to customize the update
     Update(elapsedDeltaTime) {
         if (typeof this.UpdateOverride === 'function')
             this.UpdateOverride(elapsedDeltaTime);
@@ -87,6 +90,27 @@ class Camera extends Object {
         else
             this[threeCameraSymbol].zoom = zoom;
         this[threeCameraSymbol].updateProjectionMatrix();
+    }
+
+    // param: THREE.AudioListener
+    // Add an audio listener to the camera
+    AddAudioListener(audioListener) {
+        if (typeof audioListener === 'undefined') {
+            console.error('Camera::AddAudioListener: \'audioListener\' is undefined');
+            return;
+        }
+        if (audioListener instanceof THREE.AudioListener) {
+            this[threeCameraSymbol].add(audioListener);
+            this.audioListener = audioListener;
+        }
+        else {
+            console.error('Camera::AddAudioListener: unknown type for \'audioListener\'');
+        }
+    }
+
+    // Return the audio listener of the camera if there is one
+    GetAudioListener() {
+        return (this.audioListener);
     }
 }
 
