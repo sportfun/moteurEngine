@@ -67,6 +67,10 @@ class Scene {
         }
     }
 
+    GetCameras() {
+        return (this.cameras);
+    }
+
     // param: number
     // Change the background color of the scene
     SetBackgroundColor(color) {

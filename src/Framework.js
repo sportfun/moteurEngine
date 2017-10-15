@@ -8,11 +8,11 @@ class Framework {
 
     constructor() {
         this.renderer = new THREE.WebGLRenderer();
+        this.scenes = [];
         this.OnWindowResize();
         window.addEventListener('resize', event => this.OnWindowResize(event), false);
         document.body.appendChild(this.renderer.domElement);
         this.clock = new THREE.Clock();
-        this.scenes = [];
         this.currentScene = undefined;
         console.log('Framework successfully created');
     }
@@ -56,8 +56,14 @@ class Framework {
         this.screenHeight = window.innerHeight;
         this.aspect = this.screenWidth / this.screenHeight;
         this.renderer.setSize(this.screenWidth, this.screenHeight);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
 
-        // TODO(BoraxKid): Update projection matrix of cameras;
+        this.scenes.forEach(function (scene) {
+            let cameras = scene.GetCameras();
+            cameras.forEach(function (camera) {
+                camera.SetAspectRatio(this.aspect);
+            }, this);
+        }, this);
     }
 }
 
