@@ -52,7 +52,8 @@ class Framework {
     }
 
     // Handle resizing of the window
-    OnWindowResize(event) { // eslint-disable-line no-unused-lets
+    // eslint-disable-next-line no-unused-vars
+    OnWindowResize(event) {
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
         this.aspect = this.screenWidth / this.screenHeight;

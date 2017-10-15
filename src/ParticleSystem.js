@@ -1,24 +1,22 @@
-'use strict'
+'use strict';
 
 let THREE = require('three');
-let GPUParticleSystem = require('../src/GPUParticleSystem.js');
 
-
-import Object from '../src/Object.js';
+// eslint-disable-next-line
+import GPUParticleSystem from '../src/GPUParticleSystem.js';
 
 /*
     Particle system wrapping class
 */
 
 var particleSystemSybol = Symbol();
-class ParticleSystem extends THREE.GPUParticleSystem
-{
+class ParticleSystem {
 
     /*
         getter => return the actual instance of the object
     */
 
-    get threeObject(){
+    get threeObject() {
         return (this[particleSystemSybol]);
     }
 
@@ -28,88 +26,85 @@ class ParticleSystem extends THREE.GPUParticleSystem
         size: size of each particle
         spread: set how particle spread in the display
     */
-    constructor(particleNumber, options, spawnerOptions)
-    {
-        super();
-        this[particleSystemSybol] = new THREE.GPUParticleSystem({maxParticles: particleNumber});
-        super.threeObject = this[particleSystemSybol];
-        
+    constructor(particleNumber, options, spawnerOptions) {
+        this[particleSystemSybol] = new THREE.GPUParticleSystem({ maxParticles: particleNumber });
+
         this.options = options;
         this.spawnerOptions = spawnerOptions;
     }
 
-    get Options(){
+    get Options() {
         return (this.options);
     }
 
-    get SpawnerOptions(){
+    get SpawnerOptions() {
         return (this.spawnerOptions);
     }
 
     /*
         setter position (THREE.Vector3)
     */
-    set Position(position){
+    set Position(position) {
         if (position instanceof THREE.Vector3)
             this.particleSystem.position = position;
     }
 
-    set PositionRandomness(positionRandomness){
+    set PositionRandomness(positionRandomness) {
         if (positionRandomness >= 0 && positionRandomness <= 1)
             this.options.positionRandomness = positionRandomness;
     }
 
-    set Velocity(velocity){
+    set Velocity(velocity) {
         if (velocity instanceof THREE.Vector3)
             this.options.velocity = velocity;
     }
 
-    set VelocityRandomness(velocityRandomness){
+    set VelocityRandomness(velocityRandomness) {
         if (velocityRandomness >= 0 && velocityRandomness <= 1)
             this.options.velocityRandomness = velocityRandomness;
     }
 
-    set Color(color){
+    set Color(color) {
         this.options.color = new THREE.color(color);
     }
-    set ColorRandomness(colorRandomness){
-        if (colorRandomness >= 0 && colorRandomness <= 1){
+    set ColorRandomness(colorRandomness) {
+        if (colorRandomness >= 0 && colorRandomness <= 1) {
             this.options.colorRandomness = colorRandomness;
         }
     }
 
-    set Turbulence(turbulence){
+    set Turbulence(turbulence) {
         if (turbulence >= 0 && turbulence <= 1)
             this.options.turbulence = turbulence;
     }
 
-    set Lifetime(lifetime){
+    set Lifetime(lifetime) {
         this.options.lifetime = lifetime;
     }
 
-    set Size(size){
+    set Size(size) {
         this.options.size = size;
     }
 
-    set SizeRandomness(sizeRandomness){
+    set SizeRandomness(sizeRandomness) {
         if (sizeRandomness >= 0 && sizeRandomness <= 1)
             this.options.sizeRandomness = sizeRandomness;
     }
 
-    set SpawnRate(spawnRate){
+    set SpawnRate(spawnRate) {
         this.spawnerOptions.spawnRate = spawnRate;
     }
 
-    set HorizontalSpeed(horizontalSpeed){
+    set HorizontalSpeed(horizontalSpeed) {
         this.spawnerOptions.horizontalSpeed = horizontalSpeed;
     }
 
-    set VerticalSpeed(verticalSpeed){
+    set VerticalSpeed(verticalSpeed) {
         this.spawnerOptions.verticalSpeed = verticalSpeed;
     }
 
-    set TimeScale(timeScale){
-        if (timeScale >= 0 && timeScale <= 1){
+    set TimeScale(timeScale) {
+        if (timeScale >= 0 && timeScale <= 1) {
             this.spawnerOptions.timeScale = timeScale;
         }
     }

@@ -95,11 +95,13 @@ class Audio {
         }
     }
 
-    OnLoadAudioProgress(xhr) { // eslint-disable-line no-unused-lets
+    // eslint-disable-next-line no-unused-vars
+    OnLoadAudioProgress(xhr) {
 
     }
 
-    OnLoadAudioError(xhr, filePath) { // eslint-disable-line no-unused-lets
+    // eslint-disable-next-line no-unused-vars
+    OnLoadAudioError(xhr, filePath) {
         console.error('Audio::OnLoadAudioError: error loading \'filePath\' (' + filePath + ')');
     }
 }
