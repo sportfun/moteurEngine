@@ -8,6 +8,7 @@ let THREE = require('three');
 import Framework from '../src/Framework.js';
 import Camera from '../src/Camera.js';
 import Material from '../src/Material.js';
+import ParticleSystem from '../src/ParticleSystem.js';
 
 let framework = new Framework();
 
@@ -30,6 +31,27 @@ cube.rotation.x = 45;
 cube.rotation.y = 45;
 
 currentScene.AddTHREEObject(cube);
+
+let particles = new ParticleSystem(25000);
+currentScene.AddObject(particles);
+
+let colors = [0xaa88ff, 0xff7711, 0x44cc99]; 
+let tick = 0;
+particles.UpdateOverride = function (elapsedDeltaTime) {
+    let delta = elapsedDeltaTime * this.spawnerOptions.timeScale;
+    tick += elapsedDeltaTime;
+    for (var c in colors) {
+        var p = colors[c]; 
+        this.options.color = p; 
+        this.options.position.x = Math.sin(tick + (Math.PI * 0.5 * c) * this.spawnerOptions.horizontalSpeed) * 40; 
+        this.options.position.y = Math.cos(tick + (Math.PI * 0.5 * c) * this.spawnerOptions.verticalSpeed) * 20; 
+        this.options.position.z = Math.sin(tick + (Math.PI * 0.5 * c) * this.spawnerOptions.horizontalSpeed + this.spawnerOptions.verticalSpeed) * 5; 
+        for (var x = 0; x < this.spawnerOptions.spawnRate * delta; x++) { 
+            this.threeObject.spawnParticle(this.Options); 
+        } 
+    }
+    this.threeObject.update(tick); 
+};
 
 let light = new THREE.HemisphereLight(0xFFFFFF, 0x444444, 1.0);
 light.position.set(0, 1, 0);
