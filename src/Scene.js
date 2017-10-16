@@ -1,6 +1,7 @@
 'use strict';
 
 let THREE = require('three');
+require('three-fbx-loader')(THREE)
 
 import Camera from '../src/Camera.js';
 
@@ -16,6 +17,9 @@ class Scene {
         return (this[mainCameraSymbol]);
     }
 
+    get Mixers() {
+        return (this.mixers);
+    }
     // param: string
     constructor(name) {
         this.name = name;
@@ -23,11 +27,15 @@ class Scene {
         this[mainCameraSymbol] = undefined;
         this.cameras = [];
         this.objects = [];
+        this.mixers = [];
+        this.manager = new THREE.LoadingManager();
+        this.fbxLoader = new THREE.FBXLoader(this.manager);
+
         console.log('Scene ' + this.name + ' successfully created');
     }
 
     Clean() {
-        this.cameras.forEach(function(camera) {
+        this.cameras.forEach(function (camera) {
             camera.Clean();
         }, this);
         delete (this.cameras); // not sure
@@ -40,11 +48,11 @@ class Scene {
     // Called every frame by Framework if the scene is in use
     // elapsedDeltaTime is the time passed since last frame in milliseconds
     Update(elapsedDeltaTime) {
-        this.cameras.forEach(function(camera) {
+        this.cameras.forEach(function (camera) {
             if (typeof camera.Update === 'function')
                 camera.Update(elapsedDeltaTime);
         }, this);
-        this.objects.forEach(function(object) {
+        this.objects.forEach(function (object) {
             if (typeof object.Update === 'function')
                 object.Update(elapsedDeltaTime);
         }, this);
@@ -123,6 +131,41 @@ class Scene {
         else {
             console.warn('Scene::SetBackgroundCubeTexture: can\'t handle type ' + typeof cubeTexture + ' of \'cubeTexture\'');
         }
+    }
+
+    LoadModel(path, position, rotation) {
+        let model = new THREE.Group();
+        let fileExt = path.split('.').pop();
+
+        if (!path)
+            console.error('3D model path: ' + path + ' is invalid.');
+        if (fileExt === "fbx") {
+            this.fbxLoader.load(path, object => this.OnLoadModelSuccess(model, object), xhr => this.OnLoadModelProgress(xhr), xhr => this.OnErrorLoadModel(xhr, path));
+            return (model);
+        }
+        return(undefined);
+    }
+
+    OnLoadModelSuccess(model, object) {
+        if (object.animations !== undefined){
+            object.mixer = new THREE.AnimationMixer(object);
+            object.action = object.mixer.clipAction( object.animations[ 0 ] );
+            object.action.play();
+            this.mixers.push(object.mixer);
+        }
+        model.add(object);
+    }
+
+    OnLoadModelProgress(xhr){
+        if ( xhr.lengthComputable ) {
+            var percentComplete = xhr.loaded / xhr.total * 100;
+            console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+        }
+    }
+
+    OnErrorLoadModel(xhr, path){
+        console.error(xhr);
+        console.error('cannot load properly file :' + path);
     }
 }
 

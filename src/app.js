@@ -14,7 +14,7 @@ let framework = new Framework();
 
 let tick = 0;
 let colors = [0xaa88ff, 0xff7711, 0x44cc99];
-
+let clock = new THREE.Clock(true);
 let currentScene = framework.CreateScene('Test scene');
 framework.UseScene(currentScene);
 currentScene.SetBackgroundColor(0x34495e);
@@ -57,6 +57,11 @@ let spawnerOptions = {
 let particleSystem = new ParticleSystem(250000, options, spawnerOptions);
 currentScene.AddModel(particleSystem.threeObject);
 
+
+
+let model = currentScene.LoadModel("./resources/models/skinman/xsi_man_skinning.fbx", new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0));
+currentScene.AddModel(model);
+
 camera.UpdateOverride = function (elapsedDeltaTime) {
     // let angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
     let delta = elapsedDeltaTime * particleSystem.spawnerOptions.timeScale;
@@ -69,7 +74,6 @@ camera.UpdateOverride = function (elapsedDeltaTime) {
 
     // let posX = angleCos * deltaX - angleSin * deltaY + cube.position.x;
     // let posY = angleSin * deltaX + angleCos * deltaY + cube.position.z;
-
     tick += delta;
     if (tick < 0) tick = 0;
     if (delta > 0) {
@@ -87,8 +91,14 @@ camera.UpdateOverride = function (elapsedDeltaTime) {
 
     }
     particleSystem.threeObject.update(tick);
+
+    if (currentScene.Mixers.length > 0){
+        for (let i = 0; i < currentScene.Mixers.length; i++){
+            currentScene.Mixers[i].update(clock.getDelta());            
+        }
+    }
     //this.SetPosition(new THREE.Vector3(posX, 1, posY));
-    this.LookAt(cube);
+    this.LookAt(model);
 };
 
 framework.Render();
