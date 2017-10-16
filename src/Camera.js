@@ -34,7 +34,13 @@ class Camera extends Object {
     // param: Vector3
     // Make the camera look at the given position
     LookAt(target) {
-        if (target instanceof THREE.Object3D)
+        if (typeof target === 'undefined') {
+            console.error('Camera::LookAt: \'target\' is undefined');
+            return;
+        }
+        if (typeof target.threeObject !== 'undefined')
+            this[threeCameraSymbol].lookAt(target.threeObject);
+        else if (target instanceof THREE.Object3D)
             this[threeCameraSymbol].lookAt(target.position);
         else if (target instanceof THREE.Vector3)
             this[threeCameraSymbol].lookAt(target);

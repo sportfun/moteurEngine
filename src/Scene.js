@@ -1,9 +1,10 @@
 'use strict';
 
 let THREE = require('three');
-require('three-fbx-loader')(THREE)
+require('three-fbx-loader')(THREE);
 
 import Camera from '../src/Camera.js';
+import Object from '../src/Object.js';
 
 let threeSceneSymbol = Symbol();
 let mainCameraSymbol = Symbol();
@@ -27,9 +28,8 @@ class Scene {
         this[mainCameraSymbol] = undefined;
         this.cameras = [];
         this.objects = [];
-        this.mixers = [];
-        this.manager = new THREE.LoadingManager();
-        this.fbxLoader = new THREE.FBXLoader(this.manager);
+        this.loadingManager = new THREE.LoadingManager();
+        this.fbxLoader = new THREE.FBXLoader(this.loadingManager);
 
         console.log('Scene ' + this.name + ' successfully created');
     }
@@ -60,10 +60,31 @@ class Scene {
             this.UpdateOverride(elapsedDeltaTime);
     }
 
-    AddModel(model) {
-        // TODO(BoraxKid): Check model before continuing
-        this.objects.push(model);
-        this[threeSceneSymbol].add(model);
+    // param: Object
+    // Add 'object' to the scene
+    AddObject(object) {
+        if (typeof object === 'undefined') {
+            console.error('Scene::AddObject: \'object\' is undefined');
+            return;
+        }
+        if (object instanceof Object) {
+            this.objects.push(object);
+            this[threeSceneSymbol].add(object.threeObject);
+        }
+        else {
+            console.error('Scene::AddObject: can\'t handle \'object\' because its type is \'' + typeof object + '\'');
+            return;
+        }
+    }
+
+    AddTHREEObject(object) {
+        if (typeof object === 'undefined') {
+            console.error('Scene::AddObject: \'object\' is undefined');
+            return;
+        }
+        else {
+            this[threeSceneSymbol].add(object);
+        }
     }
 
     // param: Camera
@@ -133,37 +154,44 @@ class Scene {
         }
     }
 
-    LoadModel(path, position, rotation) {
-        let model = new THREE.Group();
-        let fileExt = path.split('.').pop();
+    // param: string, function(Object, (optional)boolean)
+    // Load a 3D model and call the callback on completion
+    // Return the Object
+    LoadModel(filePath, callback) {
+        let object = new Object();
+        let fileExt = filePath.split('.').pop();
 
-        if (!path)
-            console.error('3D model path: ' + path + ' is invalid.');
-        if (fileExt === "fbx") {
-            this.fbxLoader.load(path, object => this.OnLoadModelSuccess(model, object), xhr => this.OnLoadModelProgress(xhr), xhr => this.OnErrorLoadModel(xhr, path));
-            return (model);
+        if (typeof filePath === 'undefined')
+            console.error('Scene::LoadModel: \'filePath\' is undefined');
+        if (fileExt === 'fbx') {
+            this.fbxLoader.load(filePath, buffer => this.OnLoadModelComplete(buffer, object, callback), xhr => this.OnLoadModelProgress(xhr), xhr => this.OnLoadModelError(xhr, filePath));
+            return (object);
         }
-        return(undefined);
+        return (undefined);
     }
 
-    OnLoadModelSuccess(model, object) {
-        if (object.animations !== undefined){
-            object.mixer = new THREE.AnimationMixer(object);
-            object.action = object.mixer.clipAction( object.animations[ 0 ] );
+    OnLoadModelComplete(buffer, object, callback) {
+        let animated = false;
+        if (typeof buffer.animations !== 'undefined') {
+            animated = true;
+            object.animations = buffer.animations;
+            object.mixer = new THREE.AnimationMixer(buffer);
+            object.action = object.mixer.clipAction(object.animations[0]);
             object.action.play();
-            this.mixers.push(object.mixer);
         }
-        model.add(object);
+        object.children = buffer.children.slice();
+        object.threeObject = object.children[0];
+        callback(object, animated);
     }
 
-    OnLoadModelProgress(xhr){
-        if ( xhr.lengthComputable ) {
+    OnLoadModelProgress(xhr) {
+        if (xhr.lengthComputable) {
             var percentComplete = xhr.loaded / xhr.total * 100;
-            console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+            console.log(Math.round(percentComplete, 2) + '% downloaded');
         }
     }
 
-    OnErrorLoadModel(xhr, path){
+    OnLoadModelError(xhr, path) {
         console.error(xhr);
         console.error('cannot load properly file :' + path);
     }

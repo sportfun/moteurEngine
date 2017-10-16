@@ -17,6 +17,14 @@ class Object {
         this[threeObject3DSymbol] = null;
     }
 
+    // param: number
+    // Called every frame, update the state of the camera
+    // Override 'UpdateOverride' to customize the update
+    Update(elapsedDeltaTime) {
+        if (typeof this.UpdateOverride === 'function')
+            this.UpdateOverride(elapsedDeltaTime);
+    }
+
     // return: THREE.Vector3
     GetPosition() {
         return (this[threeObject3DSymbol].position);

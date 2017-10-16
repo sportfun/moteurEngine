@@ -8,19 +8,15 @@ let THREE = require('three');
 import Framework from '../src/Framework.js';
 import Camera from '../src/Camera.js';
 import Material from '../src/Material.js';
-import ParticleSystem from '../src/ParticleSystem.js';
 
 let framework = new Framework();
 
-let tick = 0;
-let colors = [0xaa88ff, 0xff7711, 0x44cc99];
-let clock = new THREE.Clock(true);
 let currentScene = framework.CreateScene('Test scene');
 framework.UseScene(currentScene);
 currentScene.SetBackgroundColor(0x34495e);
 
 let camera = new Camera();
-camera.SetPosition(new THREE.Vector3(10, 3, 10));
+camera.SetPosition(new THREE.Vector3(2, 18, 28));
 currentScene.AddCamera(camera);
 
 let geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -33,72 +29,33 @@ let cube = new THREE.Mesh(geometry, material.threeObject);
 cube.rotation.x = 45;
 cube.rotation.y = 45;
 
-currentScene.AddModel(cube);
+currentScene.AddTHREEObject(cube);
 
-let options = {
-    position: new THREE.Vector3(),
-    positionRandomness: .3,
-    velocity: new THREE.Vector3(),
-    velocityRandomness: .5,
-    color: 0x00ff00,
-    colorRandomness: 0,
-    turbulence: .5,
-    lifetime: 2,
-    size: 5,
-    sizeRandomness: 1
-};
-let spawnerOptions = {
-    spawnRate: 15000,
-    horizontalSpeed: 1.5,
-    verticalSpeed: 1.33,
-    timeScale: 1
+let light = new THREE.HemisphereLight(0xFFFFFF, 0x444444, 1.0);
+light.position.set(0, 1, 0);
+currentScene.AddTHREEObject(light);
+
+let modelLoaded = function (object) {
+    currentScene.AddObject(object);
+    object.UpdateOverride = function(elapsedDeltaTime) { this.mixer.update(elapsedDeltaTime); };
 };
 
-let particleSystem = new ParticleSystem(250000, options, spawnerOptions);
-currentScene.AddModel(particleSystem.threeObject);
-
-
-
-let model = currentScene.LoadModel("./resources/models/skinman/xsi_man_skinning.fbx", new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0));
-currentScene.AddModel(model);
+let model = currentScene.LoadModel('./resources/models/skinman/xsi_man_skinning.fbx', modelLoaded);
 
 camera.UpdateOverride = function (elapsedDeltaTime) {
-    // let angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
-    let delta = elapsedDeltaTime * particleSystem.spawnerOptions.timeScale;
+    let angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
 
-    // let deltaX = this.GetPosition().x - cube.position.x;
-    // let deltaY = this.GetPosition().z - cube.position.z;
+    let deltaX = this.GetPosition().x - cube.position.x;
+    let deltaY = this.GetPosition().z - cube.position.z;
 
-    // let angleCos = Math.cos(angle);
-    // let angleSin = Math.sin(angle);
+    let angleCos = Math.cos(angle);
+    let angleSin = Math.sin(angle);
 
-    // let posX = angleCos * deltaX - angleSin * deltaY + cube.position.x;
-    // let posY = angleSin * deltaX + angleCos * deltaY + cube.position.z;
-    tick += delta;
-    if (tick < 0) tick = 0;
-    if (delta > 0) {
+    let posX = angleCos * deltaX - angleSin * deltaY + cube.position.x;
+    let posY = angleSin * deltaX + angleCos * deltaY + cube.position.z;
 
-        for (var c in colors) {
-            var p = colors[c];
-            options.color = p;
-            particleSystem.options.position.x = Math.sin(tick + (Math.PI * 0.5 * c) * particleSystem.spawnerOptions.horizontalSpeed) * 40;
-            particleSystem.options.position.y = Math.cos(tick + (Math.PI * 0.5 * c) * particleSystem.spawnerOptions.verticalSpeed) * 20;
-            particleSystem.options.position.z = Math.sin(tick + (Math.PI * 0.5 * c) * particleSystem.spawnerOptions.horizontalSpeed + particleSystem.spawnerOptions.verticalSpeed) * 5;
-            for (var x = 0; x < spawnerOptions.spawnRate * delta; x++) {
-                particleSystem.threeObject.spawnParticle(particleSystem.Options);
-            }
-        }
-
-    }
-    particleSystem.threeObject.update(tick);
-
-    if (currentScene.Mixers.length > 0){
-        for (let i = 0; i < currentScene.Mixers.length; i++){
-            currentScene.Mixers[i].update(clock.getDelta());            
-        }
-    }
-    //this.SetPosition(new THREE.Vector3(posX, 1, posY));
-    this.LookAt(model);
+    this.SetPosition(new THREE.Vector3(posX, 1, posY));
+    this.LookAt(cube);
 };
 
 framework.Render();
