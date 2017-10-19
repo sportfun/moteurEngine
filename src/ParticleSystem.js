@@ -58,75 +58,151 @@ class ParticleSystem extends Object {
             this.UpdateOverride(elapsedDeltaTime);
     }
 
+    /*
+        return the object options, fill with particle systems features
+    */
+
     get Options() {
         return (this.options);
     }
+
+    /*
+        return the object spawner use to spawn particles with all it features
+    */
 
     get SpawnerOptions() {
         return (this.spawnerOptions);
     }
 
     /*
-        setter position (THREE.Vector3)
+        setter position 
+        param: (THREE.Vector3)
     */
     set Position(position) {
         if (position instanceof THREE.Vector3)
             this.particleSystem.position = position;
     }
 
+
+    /*
+        setter positionRandomness 
+        param: positionRandomness (float 0 <= x <= 1)
+    */
+
     set PositionRandomness(positionRandomness) {
         if (positionRandomness >= 0 && positionRandomness <= 1)
             this.options.positionRandomness = positionRandomness;
     }
+
+    /*
+        setter Velocity 
+        param: velocity (THREE.Vector3)
+    */
 
     set Velocity(velocity) {
         if (velocity instanceof THREE.Vector3)
             this.options.velocity = velocity;
     }
 
+    /*
+        setter VelocityRandomness 
+        param: velocityRandomness (float 0 <= x <= 1)
+    */
+
     set VelocityRandomness(velocityRandomness) {
         if (velocityRandomness >= 0 && velocityRandomness <= 1)
             this.options.velocityRandomness = velocityRandomness;
     }
+    
+    /*
+        setter particles color 
+        param: color (Hexa)
+    */
 
     set Color(color) {
         this.options.color = new THREE.color(color);
     }
+
+    /*
+        setter colorrandomness of this particle system
+        param: colorRandomness 0 <= colorRandomness <= 1
+    */
+
     set ColorRandomness(colorRandomness) {
         if (colorRandomness >= 0 && colorRandomness <= 1) {
             this.options.colorRandomness = colorRandomness;
         }
     }
 
+    /*
+        setter turbulence of particle 
+        param: turbulence float 0 <= turbulence <= 1
+    */
+
     set Turbulence(turbulence) {
         if (turbulence >= 0 && turbulence <= 1)
             this.options.turbulence = turbulence;
     }
 
+    /*
+        setter Life time of a particle
+        param: lifeTime
+    */
+
     set Lifetime(lifetime) {
         this.options.lifetime = lifetime;
     }
 
+    /*
+        setter particle size
+        param: size
+    */
+
     set Size(size) {
         this.options.size = size;
     }
+
+    /*
+        setter particle size randomness at spawning
+        param: sizeRandomness 0 <= sizeRandomness <= 1
+    */
 
     set SizeRandomness(sizeRandomness) {
         if (sizeRandomness >= 0 && sizeRandomness <= 1)
             this.options.sizeRandomness = sizeRandomness;
     }
 
+    /*
+        setter particle Spawn rate 
+        param: spawnRate
+    */
+
     set SpawnRate(spawnRate) {
         this.spawnerOptions.spawnRate = spawnRate;
     }
+
+    /*
+        setter particle horizontal speed
+        param: horizontalSpeed
+    */
 
     set HorizontalSpeed(horizontalSpeed) {
         this.spawnerOptions.horizontalSpeed = horizontalSpeed;
     }
 
+    /*
+        setter particle vertical speed
+        param: verticalSpeed
+    */
+
     set VerticalSpeed(verticalSpeed) {
         this.spawnerOptions.verticalSpeed = verticalSpeed;
     }
+
+    /*
+        setter time scale of spawning
+        param: timeScale 0 <= timeScale <= 1
+    */
 
     set TimeScale(timeScale) {
         if (timeScale >= 0 && timeScale <= 1) {
