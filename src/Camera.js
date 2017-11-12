@@ -2,7 +2,7 @@
 
 let THREE = require('three');
 
-import { log } from '../src/Utils.js';
+import { log, logError } from '../src/Utils.js';
 import GameObject from '../src/GameObject.js';
 
 let threeCameraSymbol = Symbol();
@@ -36,7 +36,7 @@ class Camera extends GameObject {
     // Make the camera look at the given position
     LookAt(target) {
         if (typeof target === 'undefined') {
-            console.error('Camera::LookAt: \'target\' is undefined');
+            logError('Camera::LookAt: \'target\' is undefined');
             return;
         }
         if (typeof target.threeObject !== 'undefined')
@@ -128,7 +128,7 @@ class Camera extends GameObject {
     // Add an audio listener to the camera
     AddAudioListener(audioListener) {
         if (typeof audioListener === 'undefined') {
-            console.error('Camera::AddAudioListener: \'audioListener\' is undefined');
+            logError('Camera::AddAudioListener: \'audioListener\' is undefined');
             return;
         }
         if (audioListener instanceof THREE.AudioListener) {
@@ -136,7 +136,7 @@ class Camera extends GameObject {
             this.audioListener = audioListener;
         }
         else {
-            console.error('Camera::AddAudioListener: unknown type for \'audioListener\'');
+            logError('Camera::AddAudioListener: unknown type for \'audioListener\'');
         }
     }
 

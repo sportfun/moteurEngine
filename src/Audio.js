@@ -2,6 +2,8 @@
 
 let THREE = require('three');
 
+import { logError } from '../src/Utils.js';
+
 class Audio {
     constructor() {
         this.audioLoader = new THREE.AudioLoader();
@@ -20,11 +22,11 @@ class Audio {
     // Create a sound from the file passed in arguments for the audio listener passed in arguments
     CreateSound(filePath, audioListener, looped, specialVolume, playOnLoad) {
         if (typeof filePath === 'undefined') {
-            console.error('Audio::Play: \'filePath\' is undefined');
+            logError('Audio::Play: \'filePath\' is undefined');
             return;
         }
         if (typeof audioListener === 'undefined') {
-            console.error('Audio::Play: \'audioListener\' is undefined');
+            logError('Audio::Play: \'audioListener\' is undefined');
             return;
         }
         let loop = this.defaultLoop;
@@ -48,11 +50,11 @@ class Audio {
     // Create a positinal sound from the file passed in arguments for the audio listener passed in arguments
     CreatePositionalSound(filePath, audioListener, refDistance, looped, specialVolume, playOnLoad) {
         if (typeof filePath === 'undefined') {
-            console.error('Audio::Play: \'filePath\' is undefined');
+            logError('Audio::Play: \'filePath\' is undefined');
             return;
         }
         if (typeof audioListener === 'undefined') {
-            console.error('Audio::Play: \'audioListener\' is undefined');
+            logError('Audio::Play: \'audioListener\' is undefined');
             return;
         }
         let loop = this.defaultLoop;
@@ -102,7 +104,7 @@ class Audio {
 
     // eslint-disable-next-line no-unused-vars
     OnLoadAudioError(xhr, filePath) {
-        console.error('Audio::OnLoadAudioError: error loading \'filePath\' (' + filePath + ')');
+        logError('Audio::OnLoadAudioError: error loading \'filePath\' (' + filePath + ')');
     }
 }
 

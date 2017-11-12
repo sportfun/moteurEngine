@@ -3,7 +3,7 @@
 let THREE = require('three');
 require('three-fbx-loader')(THREE);
 
-import { log } from '../src/Utils.js';
+import { log, logError } from '../src/Utils.js';
 import Camera from '../src/Camera.js';
 import GameObject from '../src/GameObject.js';
 
@@ -65,7 +65,7 @@ class Scene {
     // Add 'object' to the scene
     AddObject(object) {
         if (typeof object === 'undefined') {
-            console.error('Scene::AddObject: \'object\' is undefined');
+            logError('Scene::AddObject: \'object\' is undefined');
             return;
         }
         if (object instanceof GameObject) {
@@ -73,14 +73,14 @@ class Scene {
             this[threeSceneSymbol].add(object.threeObject);
         }
         else {
-            console.error('Scene::AddObject: can\'t handle \'object\' because its type is \'' + typeof object + '\'');
+            logError('Scene::AddObject: can\'t handle \'object\' because its type is \'' + typeof object + '\'');
             return;
         }
     }
 
     AddTHREEObject(object) {
         if (typeof object === 'undefined') {
-            console.error('Scene::AddObject: \'object\' is undefined');
+            logError('Scene::AddObject: \'object\' is undefined');
             return;
         }
         else {
@@ -105,7 +105,7 @@ class Scene {
     // Change the background color of the scene
     SetBackgroundColor(color) {
         if (typeof color === 'undefined') {
-            console.error('Scene::SetBackgroundColor: color undefined');
+            logError('Scene::SetBackgroundColor: color undefined');
             return;
         }
         if (typeof color === 'number') {
@@ -125,7 +125,7 @@ class Scene {
     // Change the background texture of the scene
     SetBackgroundTexture(texture) {
         if (typeof texture === 'undefined') {
-            console.error('Scene::SetBackgroundTexture: texture undefined');
+            logError('Scene::SetBackgroundTexture: texture undefined');
             return;
         }
         if (texture instanceof THREE.Texture) {
@@ -144,7 +144,7 @@ class Scene {
     // Change the background cube texture of the scene
     SetBackgroundCubeTexture(cubeTexture) {
         if (typeof cubeTexture === 'undefined') {
-            console.error('Scene::SetBackgroundCubeTexture: cubeTexture undefined');
+            logError('Scene::SetBackgroundCubeTexture: cubeTexture undefined');
             return;
         }
         if (cubeTexture instanceof THREE.CubeTexture) {
@@ -163,7 +163,7 @@ class Scene {
         let fileExt = filePath.split('.').pop();
 
         if (typeof filePath === 'undefined')
-            console.error('Scene::LoadModel: \'filePath\' is undefined');
+            logError('Scene::LoadModel: \'filePath\' is undefined');
         if (fileExt === 'fbx') {
             this.fbxLoader.load(filePath, buffer => this.OnLoadModelComplete(buffer, object, callback), xhr => this.OnLoadModelProgress(xhr), xhr => this.OnLoadModelError(xhr, filePath));
             return (object);
@@ -193,8 +193,8 @@ class Scene {
     }
 
     OnLoadModelError(xhr, path) {
-        console.error(xhr);
-        console.error('cannot load properly file :' + path);
+        logError(xhr);
+        logError('cannot load properly file :' + path);
     }
 }
 
