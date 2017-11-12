@@ -52,7 +52,7 @@ class Camera extends GameObject {
     // param: number
     // Set the camera's field of view (FOV)
     SetFOV(fov) {
-        if (typeof fov === 'undefined' || fov === null || isNaN(fov))
+        if (typeof fov === 'undefined' || fov === null || isNaN(fov) || fov <= 0)
             log('Camera: FOV value is not a number');
         else
             this[threeCameraSymbol].fov = fov;
@@ -65,43 +65,63 @@ class Camera extends GameObject {
     }
 
     // param: number
-    // Set the camera's aspect ration (16/9, 4/3, 21/9...)
+    // Set the camera's aspect ratio (16/9, 4/3, 21/9...)
     SetAspectRatio(aspectRatio) {
-        if (isNaN(aspectRatio))
+        if (typeof aspectRatio === 'undefined' || aspectRatio === null || isNaN(aspectRatio) || aspectRatio <= 0)
             log('Camera: Aspect ratio value is not a number');
         else
             this[threeCameraSymbol].aspect = aspectRatio;
         this[threeCameraSymbol].updateProjectionMatrix();
     }
 
+    // Return the camera's aspect ratio
+    GetAspectRatio() {
+        return (this[threeCameraSymbol].aspect);
+    }
+
     // param: number
     // Set the camera's near plane (minimal distance for an object to appear)
     SetNearPlane(nearPlane) {
-        if (isNaN(nearPlane))
+        if (typeof nearPlane === 'undefined' || nearPlane === null || isNaN(nearPlane) || nearPlane <= 0)
             log('Camera: Near plane value is not a number');
         else
             this[threeCameraSymbol].near = nearPlane;
         this[threeCameraSymbol].updateProjectionMatrix();
     }
 
+    // Return the camera's near plane
+    GetNearPlane() {
+        return (this[threeCameraSymbol].near);
+    }
+
     // param: number
     // Set the camera's far plane (maximal distance for an object to appear)
     SetFarPlane(farPlane) {
-        if (isNaN(farPlane))
+        if (typeof farPlane === 'undefined' || farPlane === null || isNaN(farPlane) || farPlane <= 0)
             log('Camera: Far plane value is not a number');
         else
             this[threeCameraSymbol].far = farPlane;
         this[threeCameraSymbol].updateProjectionMatrix();
     }
 
+    // Return the camera's far plane
+    GetFarPlane() {
+        return (this[threeCameraSymbol].far);
+    }
+
     // param: number
     // Set the camera's zoom
     SetZoom(zoom) {
-        if (isNaN(zoom))
+        if (typeof zoom === 'undefined' || zoom === null || isNaN(zoom) || zoom <= 0)
             log('Camera: Zoom value is not a number');
         else
             this[threeCameraSymbol].zoom = zoom;
         this[threeCameraSymbol].updateProjectionMatrix();
+    }
+
+    // Return the camera's zoom
+    GetZoom() {
+        return (this[threeCameraSymbol].zoom);
     }
 
     // param: THREE.AudioListener
