@@ -8,6 +8,8 @@ let chai = require('chai');
 // Tell chai that we'll be using the "should" style assertions.
 chai.should();
 
+let THREE = require('three');
+
 import Audio from '../src/Audio.js';
 import Camera from '../src/Camera.js';
 import Framework from '../src/Framework.js';
@@ -30,32 +32,32 @@ describe('Camera', () => {
         });
 
         it('checks default fov', () => {
-            camera.GetFOV().should.equal(defaultFOV);
+            camera.GetFOV().should.be.a('number').that.is.equal(defaultFOV);
         });
 
         it('checks fov when passing positive number', () => {
             camera.SetFOV(60);
-            camera.GetFOV().should.equal(60);
+            camera.GetFOV().should.be.a('number').that.is.equal(60);
         });
 
         it('checks fov when passing negative numer', () => {
             camera.SetFOV(-60);
-            camera.GetFOV().should.equal(defaultFOV);
+            camera.GetFOV().should.be.a('number').that.is.equal(defaultFOV);
         });
 
-        it('checks fov when passing string', () => {
+        it('checks fov when passing a string', () => {
             camera.SetFOV('wrong');
-            camera.GetFOV().should.equal(defaultFOV);
+            camera.GetFOV().should.be.a('number').that.is.equal(defaultFOV);
         });
 
         it('checks fov when passing undefined', () => {
             camera.SetFOV(undefined);
-            camera.GetFOV().should.equal(defaultFOV);
+            camera.GetFOV().should.be.a('number').that.is.equal(defaultFOV);
         });
 
         it('checks fov when passing null', () => {
             camera.SetFOV(null);
-            camera.GetFOV().should.equal(defaultFOV);
+            camera.GetFOV().should.be.a('number').that.is.equal(defaultFOV);
         });
     });
     describe('.SetAspectRatio(aspectRatio) / .GetAspectRatio()', () => {
@@ -68,32 +70,32 @@ describe('Camera', () => {
         });
 
         it('checks default aspect ratio', () => {
-            camera.GetAspectRatio().should.equal(defaultAspectRatio);
+            camera.GetAspectRatio().should.be.a('number').that.is.equal(defaultAspectRatio);
         });
 
         it('checks fov when passing positive number', () => {
             camera.SetAspectRatio(60);
-            camera.GetAspectRatio().should.equal(60);
+            camera.GetAspectRatio().should.be.a('number').that.is.equal(60);
         });
 
         it('checks fov when passing negative numer', () => {
             camera.SetAspectRatio(-60);
-            camera.GetAspectRatio().should.equal(defaultAspectRatio);
+            camera.GetAspectRatio().should.be.a('number').that.is.equal(defaultAspectRatio);
         });
 
-        it('checks fov when passing string', () => {
+        it('checks fov when passing a string', () => {
             camera.SetAspectRatio('wrong');
-            camera.GetAspectRatio().should.equal(defaultAspectRatio);
+            camera.GetAspectRatio().should.be.a('number').that.is.equal(defaultAspectRatio);
         });
 
         it('checks fov when passing undefined', () => {
             camera.SetAspectRatio(undefined);
-            camera.GetAspectRatio().should.equal(defaultAspectRatio);
+            camera.GetAspectRatio().should.be.a('number').that.is.equal(defaultAspectRatio);
         });
 
         it('checks fov when passing null', () => {
             camera.SetAspectRatio(null);
-            camera.GetAspectRatio().should.equal(defaultAspectRatio);
+            camera.GetAspectRatio().should.be.a('number').that.is.equal(defaultAspectRatio);
         });
     });
     describe('.SetNearPlane(nearPlane) / .GetNearPlane()', () => {
@@ -106,32 +108,32 @@ describe('Camera', () => {
         });
 
         it('checks default aspect ratio', () => {
-            camera.GetNearPlane().should.equal(defaultNearPlane);
+            camera.GetNearPlane().should.be.a('number').that.is.equal(defaultNearPlane);
         });
 
         it('checks fov when passing positive number', () => {
             camera.SetNearPlane(60);
-            camera.GetNearPlane().should.equal(60);
+            camera.GetNearPlane().should.be.a('number').that.is.equal(60);
         });
 
         it('checks fov when passing negative numer', () => {
             camera.SetNearPlane(-60);
-            camera.GetNearPlane().should.equal(defaultNearPlane);
+            camera.GetNearPlane().should.be.a('number').that.is.equal(defaultNearPlane);
         });
 
-        it('checks fov when passing string', () => {
+        it('checks fov when passing a string', () => {
             camera.SetNearPlane('wrong');
-            camera.GetNearPlane().should.equal(defaultNearPlane);
+            camera.GetNearPlane().should.be.a('number').that.is.equal(defaultNearPlane);
         });
 
         it('checks fov when passing undefined', () => {
             camera.SetNearPlane(undefined);
-            camera.GetNearPlane().should.equal(defaultNearPlane);
+            camera.GetNearPlane().should.be.a('number').that.is.equal(defaultNearPlane);
         });
 
         it('checks fov when passing null', () => {
             camera.SetNearPlane(null);
-            camera.GetNearPlane().should.equal(defaultNearPlane);
+            camera.GetNearPlane().should.be.a('number').that.is.equal(defaultNearPlane);
         });
     });
     describe('.SetFarPlane(farPlane) / .GetFarPlane()', () => {
@@ -144,32 +146,71 @@ describe('Camera', () => {
         });
 
         it('checks default aspect ratio', () => {
-            camera.GetFarPlane().should.equal(defaultFarPlane);
+            camera.GetFarPlane().should.be.a('number').that.is.equal(defaultFarPlane);
         });
 
         it('checks fov when passing positive number', () => {
             camera.SetFarPlane(60);
-            camera.GetFarPlane().should.equal(60);
+            camera.GetFarPlane().should.be.a('number').that.is.equal(60);
         });
 
         it('checks fov when passing negative numer', () => {
             camera.SetFarPlane(-60);
-            camera.GetFarPlane().should.equal(defaultFarPlane);
+            camera.GetFarPlane().should.be.a('number').that.is.equal(defaultFarPlane);
         });
 
-        it('checks fov when passing string', () => {
+        it('checks fov when passing a string', () => {
             camera.SetFarPlane('wrong');
-            camera.GetFarPlane().should.equal(defaultFarPlane);
+            camera.GetFarPlane().should.be.a('number').that.is.equal(defaultFarPlane);
         });
 
         it('checks fov when passing undefined', () => {
             camera.SetFarPlane(undefined);
-            camera.GetFarPlane().should.equal(defaultFarPlane);
+            camera.GetFarPlane().should.be.a('number').that.is.equal(defaultFarPlane);
         });
 
         it('checks fov when passing null', () => {
             camera.SetFarPlane(null);
-            camera.GetFarPlane().should.equal(defaultFarPlane);
+            camera.GetFarPlane().should.be.a('number').that.is.equal(defaultFarPlane);
+        });
+    });
+    describe('.AddAudioListener(audioListener) / .GetAudioListener()', () => {
+        let camera;
+
+        beforeEach(() => {
+            camera = new Camera();
+        });
+
+        it('checks default audio listeners', () => {
+            camera.GetAudioListeners().should.be.an('array').that.is.empty;
+        });
+
+        it('checks audio listeners when passing undefined', () => {
+            camera.AddAudioListener(undefined);
+            camera.GetAudioListeners().should.be.an('array').that.is.empty;
+        });
+
+        it('checks audio listeners when passing null', () => {
+            camera.AddAudioListener(null);
+            camera.GetAudioListeners().should.be.an('array').that.is.empty;
+        });
+
+        it('checks audio listeners when passing a string', () => {
+            camera.AddAudioListener('wrong');
+            camera.GetAudioListeners().should.be.an('array').that.is.empty;
+        });
+
+        it('checks audio listeners when passing a boolean', () => {
+            camera.AddAudioListener(true);
+            camera.GetAudioListeners().should.be.an('array').that.is.empty;
+        });
+
+        it('checks audio listeners when passing a THREE.AudioListener', () => {
+            let listener = new THREE.AudioListener();
+            camera.AddAudioListener(listener);
+            let result = camera.GetAudioListeners();
+            result.should.be.an('array').to.have.lengthOf(1);
+            result.should.be.an('array').to.have.all.keys(listener);
         });
     });
 });

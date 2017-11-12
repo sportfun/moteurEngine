@@ -16,6 +16,7 @@ class Camera extends GameObject {
         super();
         this[threeCameraSymbol] = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         super.threeObject = this[threeCameraSymbol];
+        this.audioListeners = [];
         log('Camera: Successfully created');
     }
 
@@ -133,7 +134,7 @@ class Camera extends GameObject {
         }
         if (audioListener instanceof THREE.AudioListener) {
             this[threeCameraSymbol].add(audioListener);
-            this.audioListener = audioListener;
+            this.audioListeners.add(audioListener);
         }
         else {
             logError('Camera::AddAudioListener: unknown type for \'audioListener\'');
@@ -141,8 +142,8 @@ class Camera extends GameObject {
     }
 
     // Return the audio listener of the camera if there is one
-    GetAudioListener() {
-        return (this.audioListener);
+    GetAudioListeners() {
+        return (this.audioListeners);
     }
 }
 
