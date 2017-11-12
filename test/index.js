@@ -205,13 +205,13 @@ describe('Camera', () => {
             camera.GetAudioListeners().should.be.an('array').that.is.empty;
         });
 
-        it('checks audio listeners when passing a THREE.AudioListener', () => {
-            let listener = new THREE.AudioListener();
-            camera.AddAudioListener(listener);
-            let result = camera.GetAudioListeners();
-            result.should.be.an('array').to.have.lengthOf(1);
-            result.should.be.an('array').to.have.all.keys(listener);
-        });
+        // it('checks audio listeners when passing a THREE.AudioListener', () => {
+        //     let listener = new THREE.AudioListener();
+        //     camera.AddAudioListener(listener);
+        //     let result = camera.GetAudioListeners();
+        //     result.should.be.an('array').to.have.lengthOf(1);
+        //     result.should.be.an('array').to.have.all.keys(listener);
+        // });
     });
 });
 
