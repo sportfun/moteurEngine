@@ -22,6 +22,17 @@ describe('Audio', () => {
 });
 
 describe('Camera', () => {
+    describe('.threeObject', () => {
+        let camera;
+
+        beforeEach(() => {
+            camera = new Camera();
+        });
+
+        it('wrap valid three.js object', () => {
+            camera.threeObject.type.should.include('Camera');
+        });
+    });
     describe('.SetFOV(fov) / .GetFOV()', () => {
         let camera;
         let defaultFOV;
