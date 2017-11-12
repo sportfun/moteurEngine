@@ -2,10 +2,10 @@
 
 let THREE = require('three');
 
-import Object from '../src/Object.js';
+import GameObject from '../src/GameObject.js';
 
 let threeCameraSymbol = Symbol();
-class Camera extends Object {
+class Camera extends GameObject {
 
     get threeObject() {
         return (this[threeCameraSymbol]);

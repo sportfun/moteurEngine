@@ -3,7 +3,7 @@
 let THREE = require('three');
 
 let threeObject3DSymbol = Symbol();
-class Object {
+class GameObject {
 
     get threeObject() {
         return (this[threeObject3DSymbol]);
@@ -87,9 +87,9 @@ class Object {
             this[threeObject3DSymbol].add(audio);
         }
         else {
-            console.error('Object::AddPositionalAudio: \'audio\' is undefined or not of type THREE.PositionalAudio');
+            console.error('GameObject::AddPositionalAudio: \'audio\' is undefined or not of type THREE.PositionalAudio');
         }
     }
 }
 
-export default Object;
+export default GameObject;

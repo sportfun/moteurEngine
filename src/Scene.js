@@ -4,7 +4,7 @@ let THREE = require('three');
 require('three-fbx-loader')(THREE);
 
 import Camera from '../src/Camera.js';
-import Object from '../src/Object.js';
+import GameObject from '../src/GameObject.js';
 
 let threeSceneSymbol = Symbol();
 let mainCameraSymbol = Symbol();
@@ -60,14 +60,14 @@ class Scene {
             this.UpdateOverride(elapsedDeltaTime);
     }
 
-    // param: Object
+    // param: GameObject
     // Add 'object' to the scene
     AddObject(object) {
         if (typeof object === 'undefined') {
             console.error('Scene::AddObject: \'object\' is undefined');
             return;
         }
-        if (object instanceof Object) {
+        if (object instanceof GameObject) {
             this.objects.push(object);
             this[threeSceneSymbol].add(object.threeObject);
         }
@@ -154,11 +154,11 @@ class Scene {
         }
     }
 
-    // param: string, function(Object, (optional)boolean)
+    // param: string, function(GameObject, (optional)boolean)
     // Load a 3D model and call the callback on completion
-    // Return the Object
+    // Return the GameObject
     LoadModel(filePath, callback) {
-        let object = new Object();
+        let object = new GameObject();
         let fileExt = filePath.split('.').pop();
 
         if (typeof filePath === 'undefined')

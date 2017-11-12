@@ -4,13 +4,13 @@ let THREE = require('three');
 
 // eslint-disable-next-line
 import GPUParticleSystem from '../src/GPUParticleSystem.js';
-import Object from '../src/Object.js';
+import GameObject from '../src/GameObject.js';
 /*
     Particle system wrapping class
 */
 
 var particleSystemSybol = Symbol();
-class ParticleSystem extends Object {
+class ParticleSystem extends GameObject {
 
     /*
         getter => return the actual instance of the object
