@@ -2,6 +2,7 @@
 
 let THREE = require('three');
 
+import { log } from '../src/Utils.js';
 import GameObject from '../src/GameObject.js';
 
 let threeCameraSymbol = Symbol();
@@ -15,12 +16,12 @@ class Camera extends GameObject {
         super();
         this[threeCameraSymbol] = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         super.threeObject = this[threeCameraSymbol];
-        console.log('Camera: Successfully created');
+        log('Camera: Successfully created');
     }
 
     Clean() {
         delete (this[threeCameraSymbol]);
-        console.log('Camera: Successfully deleted');
+        log('Camera: Successfully deleted');
     }
 
     // param: number
@@ -45,24 +46,29 @@ class Camera extends GameObject {
         else if (target instanceof THREE.Vector3)
             this[threeCameraSymbol].lookAt(target);
         else
-            console.log('Camera: LookAt\'s target is not valid');
+            log('Camera: LookAt\'s target is not valid');
     }
 
     // param: number
     // Set the camera's field of view (FOV)
     SetFOV(fov) {
-        if (isNaN(fov))
-            console.log('Camera: FOV value is not a number');
+        if (typeof fov === 'undefined' || fov === null || isNaN(fov))
+            log('Camera: FOV value is not a number');
         else
             this[threeCameraSymbol].fov = fov;
         this[threeCameraSymbol].updateProjectionMatrix();
+    }
+
+    // Return the camera's field of view (FOV)
+    GetFOV() {
+        return (this[threeCameraSymbol].fov);
     }
 
     // param: number
     // Set the camera's aspect ration (16/9, 4/3, 21/9...)
     SetAspectRatio(aspectRatio) {
         if (isNaN(aspectRatio))
-            console.log('Camera: Aspect ratio value is not a number');
+            log('Camera: Aspect ratio value is not a number');
         else
             this[threeCameraSymbol].aspect = aspectRatio;
         this[threeCameraSymbol].updateProjectionMatrix();
@@ -72,7 +78,7 @@ class Camera extends GameObject {
     // Set the camera's near plane (minimal distance for an object to appear)
     SetNearPlane(nearPlane) {
         if (isNaN(nearPlane))
-            console.log('Camera: Near plane value is not a number');
+            log('Camera: Near plane value is not a number');
         else
             this[threeCameraSymbol].near = nearPlane;
         this[threeCameraSymbol].updateProjectionMatrix();
@@ -82,7 +88,7 @@ class Camera extends GameObject {
     // Set the camera's far plane (maximal distance for an object to appear)
     SetFarPlane(farPlane) {
         if (isNaN(farPlane))
-            console.log('Camera: Far plane value is not a number');
+            log('Camera: Far plane value is not a number');
         else
             this[threeCameraSymbol].far = farPlane;
         this[threeCameraSymbol].updateProjectionMatrix();
@@ -92,7 +98,7 @@ class Camera extends GameObject {
     // Set the camera's zoom
     SetZoom(zoom) {
         if (isNaN(zoom))
-            console.log('Camera: Zoom value is not a number');
+            log('Camera: Zoom value is not a number');
         else
             this[threeCameraSymbol].zoom = zoom;
         this[threeCameraSymbol].updateProjectionMatrix();

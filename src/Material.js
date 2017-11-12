@@ -2,6 +2,8 @@
 
 let THREE = require('three');
 
+import { log } from '../src/Utils.js';
+
 let threeMaterialSymbol = Symbol();
 class Material {
 
@@ -23,7 +25,7 @@ class Material {
             this[threeMaterialSymbol].opacity = opacity;
         }
         else
-            console.log('Material: opacity value is not a Number');
+            log('Material: opacity value is not a Number');
     }
 
     // param: boolean

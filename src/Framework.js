@@ -2,6 +2,7 @@
 
 let THREE = require('three');
 
+import { log } from '../src/Utils.js';
 import Scene from '../src/Scene.js';
 
 class Framework {
@@ -14,7 +15,7 @@ class Framework {
         document.body.appendChild(this.renderer.domElement);
         this.clock = new THREE.Clock();
         this.currentScene = undefined;
-        console.log('Framework successfully created');
+        log('Framework successfully created');
     }
 
     Clean() {
@@ -25,7 +26,7 @@ class Framework {
 
         delete (this.clock);
         delete (this.renderer);
-        console.log('Framework successfully deleted');
+        log('Framework successfully deleted');
     }
 
     Render() {

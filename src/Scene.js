@@ -3,6 +3,7 @@
 let THREE = require('three');
 require('three-fbx-loader')(THREE);
 
+import { log } from '../src/Utils.js';
 import Camera from '../src/Camera.js';
 import GameObject from '../src/GameObject.js';
 
@@ -31,7 +32,7 @@ class Scene {
         this.loadingManager = new THREE.LoadingManager();
         this.fbxLoader = new THREE.FBXLoader(this.loadingManager);
 
-        console.log('Scene ' + this.name + ' successfully created');
+        log('Scene ' + this.name + ' successfully created');
     }
 
     Clean() {
@@ -41,7 +42,7 @@ class Scene {
         delete (this.cameras); // not sure
 
         delete (this[threeSceneSymbol]);
-        console.log('Scene ' + this.name + ' successfully deleted');
+        log('Scene ' + this.name + ' successfully deleted');
     }
 
     // param: float
@@ -116,7 +117,7 @@ class Scene {
         else {
             console.warn('Scene::SetBackgroundColor: can\'t handle type ' + typeof color + ' of \'color\'');
             console.debug(color);
-            console.log(color);
+            log(color);
         }
     }
 
@@ -131,7 +132,7 @@ class Scene {
             this[threeSceneSymbol].background = texture;
         }
         else if (typeof texture === 'string') {
-            console.log('Scene::SetBackgroundTexture: \'texture\' is of type string and may not be loaded properly.');
+            log('Scene::SetBackgroundTexture: \'texture\' is of type string and may not be loaded properly.');
             this[threeSceneSymbol].background = new THREE.TextureLoader().load(texture);
         }
         else {
@@ -187,7 +188,7 @@ class Scene {
     OnLoadModelProgress(xhr) {
         if (xhr.lengthComputable) {
             var percentComplete = xhr.loaded / xhr.total * 100;
-            console.log(Math.round(percentComplete, 2) + '% downloaded');
+            log(Math.round(percentComplete, 2) + '% downloaded');
         }
     }
 
