@@ -174,6 +174,44 @@ describe('Camera', () => {
             camera.GetFarPlane().should.be.a('number').that.is.equal(defaultFarPlane);
         });
     });
+    describe('.SetZoom(zoom) / .GetZoom()', () => {
+        let camera;
+        let defaultZoom;
+
+        beforeEach(() => {
+            camera = new Camera();
+            defaultZoom = camera.GetZoom();
+        });
+
+        it('checks default aspect ratio', () => {
+            camera.GetZoom().should.be.a('number').that.is.equal(defaultZoom);
+        });
+
+        it('checks fov when passing positive number', () => {
+            camera.SetZoom(60);
+            camera.GetZoom().should.be.a('number').that.is.equal(60);
+        });
+
+        it('checks fov when passing negative numer', () => {
+            camera.SetZoom(-60);
+            camera.GetZoom().should.be.a('number').that.is.equal(defaultZoom);
+        });
+
+        it('checks fov when passing a string', () => {
+            camera.SetZoom('wrong');
+            camera.GetZoom().should.be.a('number').that.is.equal(defaultZoom);
+        });
+
+        it('checks fov when passing undefined', () => {
+            camera.SetZoom(undefined);
+            camera.GetZoom().should.be.a('number').that.is.equal(defaultZoom);
+        });
+
+        it('checks fov when passing null', () => {
+            camera.SetZoom(null);
+            camera.GetZoom().should.be.a('number').that.is.equal(defaultZoom);
+        });
+    });
     describe('.AddAudioListener(audioListener) / .GetAudioListener()', () => {
         let camera;
 
