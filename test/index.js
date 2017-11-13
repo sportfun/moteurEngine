@@ -3,10 +3,8 @@
 
 process.env.NODE_ENV = 'test';
 
-let chai = require('chai');
-
-// Tell chai that we'll be using the "should" style assertions.
-chai.should();
+let should = require('chai').should();
+let expect = require('chai').expect;
 
 let THREE = require('three');
 
@@ -31,6 +29,18 @@ describe('Camera', () => {
 
         it('wrap valid three.js object', () => {
             camera.threeObject.type.should.include('Camera');
+        });
+    });
+    describe('.Clean()', () => {
+        let camera;
+
+        beforeEach(() => {
+            camera = new Camera();
+        });
+
+        it('checks .threeObject is undefined', () => {
+            camera.Clean();
+            expect(camera.threeObject).to.be.undefined;
         });
     });
     describe('.SetFOV(fov) / .GetFOV()', () => {
