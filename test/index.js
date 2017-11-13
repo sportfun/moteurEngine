@@ -31,6 +31,11 @@ describe('Camera', () => {
             camera.threeObject.type.should.include('Camera');
         });
     });
+    describe('constructor()', () => {
+        it('checks inheritance', () => {
+            GameObject.isPrototypeOf(Camera).should.be.true;
+        });
+    });
     describe('.Clean()', () => {
         let camera;
 
