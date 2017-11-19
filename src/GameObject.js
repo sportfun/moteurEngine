@@ -2,7 +2,7 @@
 
 let THREE = require('three');
 
-import { logError } from '../src/Utils.js';
+import { logError, isValidType } from '../src/Utils.js';
 
 let threeObject3DSymbol = Symbol();
 class GameObject {
@@ -25,6 +25,20 @@ class GameObject {
     Update(elapsedDeltaTime) {
         if (typeof this.UpdateOverride === 'function')
             this.UpdateOverride(elapsedDeltaTime);
+        if (isValidType(this.rigidbody, 'Rigidbody'))
+            this.rigidbody.Update(elapsedDeltaTime);
+    }
+
+    // param: Rigidbody
+    // Set a rigidbody to this GameObject
+    SetRigidbody(rigidbody) {
+        if (isValidType(rigidbody, 'Rigidbody')) {
+            this.rigidbody = rigidbody;
+            this.rigidbody.SetGameObject(this);
+        }
+        else {
+            logError('GameObject::AddRigidbody: Can\'t add rigidbody of type ' + rigidbody.constructor.name);
+        }
     }
 
     // return: THREE.Vector3
