@@ -5,14 +5,19 @@ let THREE = require('three');
 import { log } from '../src/Utils.js';
 import Scene from '../src/Scene.js';
 
+let threeRendererSymbol = Symbol();
 class Framework {
 
+    get threeObject() {
+        return (this[threeRendererSymbol]);
+    }
+
     constructor() {
-        this.renderer = new THREE.WebGLRenderer();
+        this[threeRendererSymbol] = new THREE.WebGLRenderer();
         this.scenes = [];
         this.OnWindowResize();
         window.addEventListener('resize', event => this.OnWindowResize(event), false);
-        document.body.appendChild(this.renderer.domElement);
+        document.body.appendChild(this[threeRendererSymbol].domElement);
         this.clock = new THREE.Clock();
         this.currentScene = undefined;
         log('Framework successfully created');
@@ -25,14 +30,14 @@ class Framework {
         delete (this.scenes); // not sure about this one
 
         delete (this.clock);
-        delete (this.renderer);
+        delete (this[threeRendererSymbol]);
         log('Framework successfully deleted');
     }
 
     Render() {
         requestAnimationFrame(() => this.Render()); // Just passing this.Render caused a 'not defined'
         this.currentScene.Update(this.clock.getDelta());
-        this.renderer.render(this.currentScene.threeObject, this.currentScene.camera.threeObject);
+        this[threeRendererSymbol].render(this.currentScene.threeObject, this.currentScene.camera.threeObject);
     }
 
     // Create a Scene object, add it to the scenes and return it
@@ -58,8 +63,8 @@ class Framework {
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
         this.aspect = this.screenWidth / this.screenHeight;
-        this.renderer.setSize(this.screenWidth, this.screenHeight);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this[threeRendererSymbol].setSize(this.screenWidth, this.screenHeight);
+        this[threeRendererSymbol].setPixelRatio(window.devicePixelRatio);
 
         this.scenes.forEach(function (scene) {
             let cameras = scene.GetCameras();
