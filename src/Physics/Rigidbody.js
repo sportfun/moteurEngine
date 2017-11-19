@@ -25,16 +25,16 @@ class Rigidbody {
     }
 
     Update(elapsedTime) {
-        // log('Rigidbody::Update: updating (' + elapsedTime + ') with Force' + this.force.toString() + ', Torque' + this.torque.toString() + ', Velocity' + this.velocity + ', Angular Velocity' + this.angularVelocity);
+        // log('Rigidbody::Update: updating (' + elapsedTime + ') with Force' + this.force.ToString() + ', Torque' + this.torque.ToString() + ', Velocity' + this.velocity + ', Angular Velocity' + this.angularVelocity);
         this.UpdateVelocity(elapsedTime);
         this.UpdateAngularVelocity(elapsedTime);
         if (this.forceMode === ForceMode.eImpulse)
             this.UpdateForce(elapsedTime);
         if (this.torqueMode === ForceMode.eImpulse)
             this.UpdateTorque(elapsedTime);
-        if (!this.velocity.isZero())
+        if (!this.velocity.IsZero())
             this.gameObject.Move(this.velocity.threeObject);
-        if (!this.angularVelocity.isZero())
+        if (!this.angularVelocity.IsZero())
             this.gameObject.Rotate(this.angularVelocity.threeObject);
     }
 
@@ -43,10 +43,10 @@ class Rigidbody {
     // Update the velocity with the current force if non zero
     // Decrease the velocity
     UpdateVelocity(elapsedTime) {
-        if (!this.force.isZero())
-            this.velocity = this.velocity.add(this.force.multiply(elapsedTime));
-        if (!this.velocity.isZero()) {
-            this.velocity = this.velocity.sub(this.velocity.multiply(elapsedTime));
+        if (!this.force.IsZero())
+            this.velocity = this.velocity.Add(this.force.Multiply(elapsedTime));
+        if (!this.velocity.IsZero()) {
+            this.velocity = this.velocity.Sub(this.velocity.Multiply(elapsedTime));
             this.velocity.CorrectCloseZero();
         }
     }
@@ -56,10 +56,10 @@ class Rigidbody {
     // Update the angular velocity with the current torque if non zero
     // Decrease the angular velocity
     UpdateAngularVelocity(elapsedTime) {
-        if (!this.torque.isZero())
-            this.angularVelocity = this.angularVelocity.add(this.torque.multiply(elapsedTime));
-        if (!this.angularVelocity.isZero()) {
-            this.angularVelocity = this.angularVelocity.sub(this.angularVelocity.multiply(elapsedTime));
+        if (!this.torque.IsZero())
+            this.angularVelocity = this.angularVelocity.Add(this.torque.Multiply(elapsedTime));
+        if (!this.angularVelocity.IsZero()) {
+            this.angularVelocity = this.angularVelocity.Sub(this.angularVelocity.Multiply(elapsedTime));
             this.angularVelocity.CorrectCloseZero();
         }
     }
@@ -68,8 +68,8 @@ class Rigidbody {
     // Called every frame
     // Decrease the force if non zero
     UpdateForce(elapsedTime) {
-        if (!this.force.isZero()) {
-            this.force = this.force.sub(this.force.multiply(elapsedTime));
+        if (!this.force.IsZero()) {
+            this.force = this.force.Sub(this.force.Multiply(elapsedTime));
             this.force.CorrectCloseZero();
         }
     }
@@ -78,8 +78,8 @@ class Rigidbody {
     // Called every frame
     // Decrease the torque if non zero
     UpdateTorque(elapsedTime) {
-        if (!this.torque.isZero()) {
-            this.torque = this.torque.sub(this.torque.multiply(elapsedTime));
+        if (!this.torque.IsZero()) {
+            this.torque = this.torque.Sub(this.torque.Multiply(elapsedTime));
             this.torque.CorrectCloseZero();
         }
     }

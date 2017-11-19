@@ -45,7 +45,7 @@ class Vector3 {
             this[threeVector3Symbol].z = value;
     }
 
-    multiply(value) {
+    Multiply(value) {
         if (isValidNumber(value))
             return (new Vector3(this[threeVector3Symbol].x * value, this[threeVector3Symbol].y * value, this[threeVector3Symbol].z * value));
         else if (isValidType(value, 'Vector3'))
@@ -53,7 +53,7 @@ class Vector3 {
         return (new Vector3(this[threeVector3Symbol].x, this[threeVector3Symbol].y, this[threeVector3Symbol].z));
     }
 
-    sub(value) {
+    Sub(value) {
         if (isValidNumber(value))
             return (new Vector3(this[threeVector3Symbol].x - value, this[threeVector3Symbol].y - value, this[threeVector3Symbol].z - value));
         else if (isValidType(value, 'Vector3'))
@@ -61,7 +61,7 @@ class Vector3 {
         return (new Vector3(this[threeVector3Symbol].x, this[threeVector3Symbol].y, this[threeVector3Symbol].z));
     }
 
-    add(value) {
+    Add(value) {
         if (isValidNumber(value))
             return (new Vector3(this[threeVector3Symbol].x + value, this[threeVector3Symbol].y + value, this[threeVector3Symbol].z + value));
         else if (isValidType(value, 'Vector3'))
@@ -69,7 +69,7 @@ class Vector3 {
         return (new Vector3(this[threeVector3Symbol].x, this[threeVector3Symbol].y, this[threeVector3Symbol].z));
     }
 
-    isZero() {
+    IsZero() {
         if (this[threeVector3Symbol].x == 0 && this[threeVector3Symbol].y == 0 && this[threeVector3Symbol].z == 0)
             return (true);
         return (false);
@@ -85,7 +85,7 @@ class Vector3 {
             this.z = 0;
     }
 
-    toString() {
+    ToString() {
         return ('(' + this[threeVector3Symbol].x + ', ' + this[threeVector3Symbol].y + ', ' + this[threeVector3Symbol].z + ')');
     }
 }
