@@ -273,11 +273,17 @@ describe('Vector3', () => {
         });
 
         it ('check value when close to zero', () => {
-            vector.x = 0;
-            vector.y = 0;
+            vector.x = Math.exp(-6);
+            vector.y = Math.exp(-6);
             vector.z = Math.exp(-6);
             vector.CorrectCloseZero();
             vector.IsZero().should.be.true;
+        });
+    });
+
+    describe('.ToString', () => {
+        it ('check value', () => {
+            vector.ToString().should.be.equal('(' + vector.x + ', ' + vector.y + ', ' + vector.z + ')');
         });
     });
 });
