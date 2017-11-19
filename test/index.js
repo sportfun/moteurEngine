@@ -15,6 +15,65 @@ import GameObject from '../src/GameObject.js';
 import Material from '../src/Material.js';
 import ParticleSystem from '../src/ParticleSystem.js';
 import Scene from '../src/Scene.js';
+import Vector3 from '../src/Physics/Vector3.js';
+
+describe('Vector3', () => {
+    describe('.multiply', () => {
+        let vector;
+
+        beforeEach(() => {
+            vector = new Vector3(0, 90, 0);
+        });
+
+        it ('check return value with number', () => {
+            let result = vector.multiply(0);
+            result.x.should.be.equal(0);
+            result.y.should.be.equal(0);
+            result.z.should.be.equal(0);
+            vector.x.should.be.equal(0);
+            vector.y.should.be.equal(90);
+            vector.z.should.be.equal(0);
+        });
+
+        it ('check return value with Vector3', () => {
+            let result = vector.multiply(new Vector3(0, 0, 0));
+            result.x.should.be.equal(0);
+            result.y.should.be.equal(0);
+            result.z.should.be.equal(0);
+            vector.x.should.be.equal(0);
+            vector.y.should.be.equal(90);
+            vector.z.should.be.equal(0);
+        });
+    });
+
+    describe('.sub', () => {
+        let vector;
+
+        beforeEach(() => {
+            vector = new Vector3(0, 90, 0);
+        });
+
+        it ('check return value with number', () => {
+            let result = vector.sub(0);
+            result.x.should.be.equal(0);
+            result.y.should.be.equal(90);
+            result.z.should.be.equal(0);
+            vector.x.should.be.equal(0);
+            vector.y.should.be.equal(90);
+            vector.z.should.be.equal(0);
+        });
+
+        it ('check return value with Vector3', () => {
+            let result = vector.sub(new Vector3());
+            result.x.should.be.equal(0);
+            result.y.should.be.equal(90);
+            result.z.should.be.equal(0);
+            vector.x.should.be.equal(0);
+            vector.y.should.be.equal(90);
+            vector.z.should.be.equal(0);
+        });
+    });
+});
 
 describe('Audio', () => {
 });
