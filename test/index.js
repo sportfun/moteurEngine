@@ -26,6 +26,15 @@ describe('Vector3', () => {
         defaultVector = new Vector3(0, 90, 0);
     });
 
+    describe('.threeObject', () => {
+        it('check correct type', () => {
+            let tmp = new THREE.Vector3(0, 90, 0);
+            vector.threeObject.x.should.be.equal(tmp.x);
+            vector.threeObject.y.should.be.equal(tmp.y);
+            vector.threeObject.z.should.be.equal(tmp.z);
+        });
+    });
+
     describe('.x', () => {
         it('set valid number', () => {
             vector.x = 42;
