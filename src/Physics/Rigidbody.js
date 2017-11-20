@@ -57,7 +57,7 @@ class Rigidbody {
     // Decrease the angular velocity
     UpdateAngularVelocity(elapsedTime) {
         if (!this.torque.IsZero())
-            this.angularVelocity = this.angularVelocity.Add(this.torque.Multiply(elapsedTime));
+            this.angularVelocity = this.angularVelocity.Add(this.torque);//.Multiply(elapsedTime));
         if (!this.angularVelocity.IsZero()) {
             this.angularVelocity = this.angularVelocity.Sub(this.angularVelocity.Multiply(elapsedTime));
             this.angularVelocity.CorrectCloseZero();

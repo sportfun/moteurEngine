@@ -48,7 +48,7 @@ class GameObject {
 
     // param: THREE.Vector3
     SetPosition(position) {
-        if (position && typeof position == 'object'){
+        if (position && typeof position == 'object') {
             this[threeObject3DSymbol].position.x = position.x;
             this[threeObject3DSymbol].position.y = position.y;
             this[threeObject3DSymbol].position.z = position.z;
@@ -57,7 +57,7 @@ class GameObject {
 
     // param: THREE.Vector3
     Move(movement) {
-        if (movement && typeof movement === 'object'){
+        if (movement && typeof movement === 'object') {
             this[threeObject3DSymbol].translateX(movement.x);
             this[threeObject3DSymbol].translateY(movement.y);
             this[threeObject3DSymbol].translateZ(movement.z);
@@ -71,7 +71,7 @@ class GameObject {
 
     // param: THREE.Vector3
     SetRotation(rotation) {
-        if (rotation && typeof rotation === "object"){
+        if (rotation && typeof rotation === 'object') {
             this[threeObject3DSymbol].rotation.x = rotation.x;
             this[threeObject3DSymbol].rotation.y = rotation.y;
             this[threeObject3DSymbol].rotation.z = rotation.z;

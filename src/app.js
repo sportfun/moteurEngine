@@ -5,6 +5,8 @@
 
 let THREE = require('three');
 
+import dat from 'dat.gui/build/dat.gui.js';
+
 import Framework from '../src/Framework.js';
 import Camera from '../src/Camera.js';
 import Material from '../src/Material.js';
@@ -41,7 +43,9 @@ let cube = new THREE.Mesh(geometry, material.threeObject);
 let cubeGameObject = new GameObject();
 cubeGameObject.threeObject = cube;
 let rigidbody = new Rigidbody();
+cubeGameObject.SetPosition(new Vector3(10, 0, 0));
 cubeGameObject.SetRotation(new THREE.Vector3(45, 45, 0));
+cubeGameObject.SetScale(new Vector3(10, 10, 10));
 cubeGameObject.SetRigidbody(rigidbody);
 rigidbody.SetTorque(new Vector3(0, 1, 0), ForceMode.eImpulse);
 
@@ -72,27 +76,73 @@ let light = new THREE.HemisphereLight(0xFFFFFF, 0x444444, 1.0);
 light.position.set(0, 1, 0);
 currentScene.AddTHREEObject(light);
 
+let model;
+
 let modelLoaded = function (object) {
     currentScene.AddObject(object);
     object.UpdateOverride = function(elapsedDeltaTime) { this.mixer.update(elapsedDeltaTime); };
+    model = object;
+    model.SetPosition(new Vector3(-10, -10, 0));
 };
 
-let model = currentScene.LoadModel('./resources/models/skinman/xsi_man_skinning.fbx', modelLoaded);
+currentScene.LoadModel('./resources/models/skinman/xsi_man_skinning.fbx', modelLoaded);
 
-// camera.UpdateOverride = function (elapsedDeltaTime) {
-//     let angle = (90.0 * elapsedDeltaTime) * (Math.PI / 180.0);
+let gui = new dat.GUI();
 
-//     let deltaX = this.GetPosition().x - cubeGameObject.threeObject.position.x;
-//     let deltaY = this.GetPosition().z - cubeGameObject.threeObject.position.z;
+let posParameters = {
+    x: 10.0,
+    y: 0.0,
+    z: 0.0,
+    button: () => { cubeGameObject.SetPosition(new Vector3(posParameters.x, posParameters.y, posParameters.z)); }
+};
 
-//     let angleCos = Math.cos(angle);
-//     let angleSin = Math.sin(angle);
+let rotParameters = {
+    x: 45.0,
+    y: 45.0,
+    z: 0.0,
+    button: () => { cubeGameObject.SetRotation(new Vector3(rotParameters.x, rotParameters.y, rotParameters.z)); }
+};
 
-//     let posX = angleCos * deltaX - angleSin * deltaY + cubeGameObject.threeObject.position.x;
-//     let posY = angleSin * deltaX + angleCos * deltaY + cubeGameObject.threeObject.position.z;
+let scaleParameters = {
+    x: 10.0,
+    y: 10.0,
+    z: 10.0,
+    button: () => { cubeGameObject.SetScale(new Vector3(scaleParameters.x, scaleParameters.y, scaleParameters.z)); }
+};
 
-//     this.SetPosition(new THREE.Vector3(posX, 1, posY));
-//     this.LookAt(cubeGameObject.threeObject);
-// };
+let torqueParameters = {
+    x: 0.1,
+    y: 0.1,
+    z: 0.1,
+    forceMode: true,
+    button: () => { rigidbody.SetTorque(new Vector3(torqueParameters.x, torqueParameters.y, torqueParameters.z), torqueParameters.forceMode === true ? ForceMode.eConstant : ForceMode.eImpulse); }
+};
+
+let posFolder = gui.addFolder('Position');
+posFolder.add(posParameters, 'x');
+posFolder.add(posParameters, 'y');
+posFolder.add(posParameters, 'z');
+posFolder.add(posParameters, 'button').name('Apply');
+
+let rotFolder = gui.addFolder('Rotation');
+rotFolder.add(rotParameters, 'x');
+rotFolder.add(rotParameters, 'y');
+rotFolder.add(rotParameters, 'z');
+rotFolder.add(rotParameters, 'button').name('Apply');
+
+let scaleFolder = gui.addFolder('Scale');
+scaleFolder.add(scaleParameters, 'x');
+scaleFolder.add(scaleParameters, 'y');
+scaleFolder.add(scaleParameters, 'z');
+scaleFolder.add(scaleParameters, 'button').name('Apply');
+
+let torqueFolder = gui.addFolder('Torque');
+torqueFolder.add(torqueParameters, 'x');
+torqueFolder.add(torqueParameters, 'y');
+torqueFolder.add(torqueParameters, 'z');
+torqueFolder.add(torqueParameters, 'forceMode').name('Constant');
+torqueFolder.add(torqueParameters, 'button').name('Apply');
+
+gui.open();
 
 framework.Render();
