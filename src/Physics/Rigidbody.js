@@ -44,7 +44,7 @@ class Rigidbody {
     // Decrease the velocity
     UpdateVelocity(elapsedTime) {
         if (!this.force.IsZero())
-            this.velocity = this.velocity.Add(this.force.Multiply(elapsedTime));
+            this.velocity = this.velocity.Add(this.force);//.Multiply(elapsedTime));
         if (!this.velocity.IsZero()) {
             this.velocity = this.velocity.Sub(this.velocity.Multiply(elapsedTime));
             this.velocity.CorrectCloseZero();
