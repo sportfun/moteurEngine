@@ -15,8 +15,8 @@ class Rigidbody {
         this.forceMode = ForceMode.eConstant;
         this.torque = new Vector3();
         this.torqueMode = ForceMode.eConstant;
-        this.velocity = new  Vector3();
-        this.angularVelocity = new  Vector3();
+        this.velocity = new Vector3();
+        this.angularVelocity = new Vector3();
     }
 
     SetGameObject(gameObject) {
@@ -85,6 +85,7 @@ class Rigidbody {
     }
 
     SetForce(force, forceMode) {
+        this.velocity = new Vector3();
         if (isValidType(force, 'Vector3'))
             this.force = force;
         if (typeof forceMode !== 'undefined')
@@ -94,6 +95,7 @@ class Rigidbody {
     }
 
     SetTorque(torque, forceMode) {
+        this.angularVelocity = new Vector3();
         if (isValidType(torque, 'Vector3'))
             this.torque = torque;
         if (typeof forceMode !== 'undefined')

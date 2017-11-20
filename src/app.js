@@ -110,12 +110,22 @@ let scaleParameters = {
     button: () => { cubeGameObject.SetScale(new Vector3(scaleParameters.x, scaleParameters.y, scaleParameters.z)); }
 };
 
+let forceParameters = {
+    x: 0.1,
+    y: 0.1,
+    z: 0.1,
+    forceMode: true,
+    applyButton: () => { rigidbody.SetForce(new Vector3(forceParameters.x, forceParameters.y, forceParameters.z), forceParameters.forceMode === true ? ForceMode.eConstant : ForceMode.eImpulse); },
+    stopButton: () => { rigidbody.SetForce(new Vector3()); }
+};
+
 let torqueParameters = {
     x: 0.1,
     y: 0.1,
     z: 0.1,
     forceMode: true,
-    button: () => { rigidbody.SetTorque(new Vector3(torqueParameters.x, torqueParameters.y, torqueParameters.z), torqueParameters.forceMode === true ? ForceMode.eConstant : ForceMode.eImpulse); }
+    applyButton: () => { rigidbody.SetTorque(new Vector3(torqueParameters.x, torqueParameters.y, torqueParameters.z), torqueParameters.forceMode === true ? ForceMode.eConstant : ForceMode.eImpulse); },
+    stopButton: () => { rigidbody.SetTorque(new Vector3()); }
 };
 
 let posFolder = gui.addFolder('Position');
@@ -136,12 +146,21 @@ scaleFolder.add(scaleParameters, 'y');
 scaleFolder.add(scaleParameters, 'z');
 scaleFolder.add(scaleParameters, 'button').name('Apply');
 
+let forceFolder = gui.addFolder('Force');
+forceFolder.add(forceParameters, 'x');
+forceFolder.add(forceParameters, 'y');
+forceFolder.add(forceParameters, 'z');
+forceFolder.add(forceParameters, 'forceMode').name('Constant');
+forceFolder.add(forceParameters, 'applyButton').name('Apply');
+forceFolder.add(forceParameters, 'stopButton').name('Stop');
+
 let torqueFolder = gui.addFolder('Torque');
 torqueFolder.add(torqueParameters, 'x');
 torqueFolder.add(torqueParameters, 'y');
 torqueFolder.add(torqueParameters, 'z');
 torqueFolder.add(torqueParameters, 'forceMode').name('Constant');
-torqueFolder.add(torqueParameters, 'button').name('Apply');
+torqueFolder.add(torqueParameters, 'applyButton').name('Apply');
+torqueFolder.add(torqueParameters, 'stopButton').name('Stop');
 
 gui.open();
 
