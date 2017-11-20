@@ -564,6 +564,7 @@ describe('Framework', () => {
 });
 
 describe('GameObject', () => {
+    require('./GameObjectTesting.js');
 });
 
 describe('Material', () => {

@@ -48,16 +48,20 @@ class GameObject {
 
     // param: THREE.Vector3
     SetPosition(position) {
-        this[threeObject3DSymbol].position.x = position.x;
-        this[threeObject3DSymbol].position.y = position.y;
-        this[threeObject3DSymbol].position.z = position.z;
+        if (position && typeof position == 'object'){
+            this[threeObject3DSymbol].position.x = position.x;
+            this[threeObject3DSymbol].position.y = position.y;
+            this[threeObject3DSymbol].position.z = position.z;
+        }
     }
 
     // param: THREE.Vector3
     Move(movement) {
-        this[threeObject3DSymbol].translateX(movement.x);
-        this[threeObject3DSymbol].translateY(movement.y);
-        this[threeObject3DSymbol].translateZ(movement.z);
+        if (movement && typeof movement === 'object'){
+            this[threeObject3DSymbol].translateX(movement.x);
+            this[threeObject3DSymbol].translateY(movement.y);
+            this[threeObject3DSymbol].translateZ(movement.z);
+        }
     }
 
     // return: THREE.Vector3
@@ -67,7 +71,12 @@ class GameObject {
 
     // param: THREE.Vector3
     SetRotation(rotation) {
-        this[threeObject3DSymbol].setRotationFromEuler(rotation);
+        if (rotation && typeof rotation === "object"){
+            this[threeObject3DSymbol].rotation.x = rotation.x;
+            this[threeObject3DSymbol].rotation.y = rotation.y;
+            this[threeObject3DSymbol].rotation.z = rotation.z;
+            this[threeObject3DSymbol].matrixAutoUpdate = true;
+        }
     }
 
     // param: THREE.Vector3

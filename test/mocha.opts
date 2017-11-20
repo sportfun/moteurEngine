@@ -1,1 +1,1 @@
---require babel-core/register --require jsdom-global/register
+--require babel-core/register --require jsdom-global/register --recursive
