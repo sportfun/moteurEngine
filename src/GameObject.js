@@ -81,9 +81,11 @@ class GameObject {
 
     // param: THREE.Vector3
     Rotate(rotation) {
-        this[threeObject3DSymbol].rotateX(rotation.x);
-        this[threeObject3DSymbol].rotateY(rotation.y);
-        this[threeObject3DSymbol].rotateZ(rotation.z);
+        if (rotation && typeof rotation === "object"){
+            this[threeObject3DSymbol].rotateX(rotation.x);
+            this[threeObject3DSymbol].rotateY(rotation.y);
+            this[threeObject3DSymbol].rotateZ(rotation.z);
+        }
     }
 
     // return: THREE.Vector3
@@ -93,16 +95,20 @@ class GameObject {
 
     // param: THREE.Vector3
     SetScale(scale) {
-        this[threeObject3DSymbol].scale.x = scale.x;
-        this[threeObject3DSymbol].scale.y = scale.y;
-        this[threeObject3DSymbol].scale.z = scale.z;
+        if (scale && typeof scale === "object" && scale.x >= 0 && scale.y >= 0 && scale.z >= 0){
+            this[threeObject3DSymbol].scale.x = scale.x;
+            this[threeObject3DSymbol].scale.y = scale.y;
+            this[threeObject3DSymbol].scale.z = scale.z;
+        }
     }
 
     // param: THREE.Vector3
     Scale(scale) {
-        this[threeObject3DSymbol].scale.x += scale.x;
-        this[threeObject3DSymbol].scale.y += scale.y;
-        this[threeObject3DSymbol].scale.z += scale.z;
+        if (scale && typeof scale === "object" && scale.x >= 0 && scale.y >= 0 && scale.z >= 0){
+            this[threeObject3DSymbol].scale.x += scale.x;
+            this[threeObject3DSymbol].scale.y += scale.y;
+            this[threeObject3DSymbol].scale.z += scale.z;
+        }
     }
 
     // param: THREE.PositionalAudio

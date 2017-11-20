@@ -104,29 +104,92 @@ describe('GameObject', () => {
 
     describe('.Rotate()', () => {
         let gameObject;
+        let light;
 
         beforeEach(() => {
             gameObject = new GameObject();
+            light = new THREE.HemisphereLight(0xFFFFFF, 0x444444, 1.0);
+            gameObject.threeObject = light;
         });
+
     });
 
     describe('.Scale()', () => {
         let gameObject;
+        let light;
 
         beforeEach(() => {
             gameObject = new GameObject();
+            light = new THREE.HemisphereLight(0xFFFFFF, 0x444444, 1.0);
+            gameObject.threeObject = light;
+        });
+
+        it('checks .Scale with undefineds', () => {
+            gameObject.Scale();
+            expect(gameObject.GetScale().x).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().y).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(1);
+        });
+
+        it('checks .Scale with negatives numbers', () => {
+            gameObject.Scale(new THREE.Vector3(-1, -2, -3));
+            expect(gameObject.GetScale().x).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().y).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(1);
+        });
+
+        it('checks .Scale with positives numbers', () => {
+            gameObject.Scale(new THREE.Vector3(1, 2, 3));
+            expect(gameObject.GetScale().x).to.be.a("number").that.is.equal(2);
+            expect(gameObject.GetScale().y).to.be.a("number").that.is.equal(3);
+            expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(4);
+        });
+
+        it('checks .Scale with wrongs parameters', () => {
+            gameObject.Scale(1, 2, 7);
+            expect(gameObject.GetScale().x).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().y).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(1);
         });
     });
 
     describe('.SetScale()', () => {
         let gameObject;
+        let light;
 
         beforeEach(() => {
             gameObject = new GameObject();
+            light = new THREE.HemisphereLight(0xFFFFFF, 0x444444, 1.0);
+            gameObject.threeObject = light;
         });
 
-        it('check .SetScale with undefineds', () => {
+        it('checks .SetScale with undefineds', () => {
+            gameObject.SetScale();
+            expect(gameObject.GetScale().x).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().y).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(1);
+        });
 
+        it('checks .SetScale with negatives parameters', () => {
+            gameObject.SetScale(new THREE.Vector3(-2, -3, -4));
+            expect(gameObject.GetScale().x).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().y).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(1);
+        });
+
+        it('checks .SetScale with positives numbers', () => {
+            gameObject.SetScale(new THREE.Vector3(2, 3, 4));
+            expect(gameObject.GetScale().x).to.be.a("number").that.is.equal(2);
+            expect(gameObject.GetScale().y).to.be.a("number").that.is.equal(3);
+            expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(4);
+        });
+
+        
+        it('checks .SetScale with wrong parameters type', () => {
+            gameObject.SetScale(2, 3, 4);
+            expect(gameObject.GetScale().x).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().y).to.be.a("number").that.is.equal(1);
+            expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(1);
         });
     });
 
