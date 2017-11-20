@@ -37,12 +37,11 @@ material.SetTransparent(false);
 material.SetOpacity(0.5);
 
 let cube = new THREE.Mesh(geometry, material.threeObject);
-cube.rotation.x = 45;
-cube.rotation.y = 45;
 
 let cubeGameObject = new GameObject();
 cubeGameObject.threeObject = cube;
 let rigidbody = new Rigidbody();
+cubeGameObject.SetRotation(new THREE.Vector3(45, 45, 0));
 cubeGameObject.SetRigidbody(rigidbody);
 rigidbody.SetTorque(new Vector3(0, 1, 0), ForceMode.eImpulse);
 
