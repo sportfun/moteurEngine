@@ -12,7 +12,7 @@ class Material {
     }
 
     constructor() {
-        this[threeMaterialSymbol] = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+        this[threeMaterialSymbol] = new THREE.MeshBasicMaterial({ color: 0x0000ff});
     }
 
     // param: number
@@ -37,9 +37,10 @@ class Material {
 
     // param: boolean
     // Defines wether the material is affected by lights
-    // true by default
+    // false by default
     SetAffectedByLights(affected) {
-        this[threeMaterialSymbol].lights = affected;
+        if (affected === true || affected === false)
+            this[threeMaterialSymbol].lights = affected;
     }
 }
 

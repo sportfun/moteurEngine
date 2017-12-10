@@ -43,42 +43,36 @@ describe('Material', () => {
         });
     });
 
-    describe('.SetTransparent', () => {
+    describe('.SetAffectedByLights', () => {
         let material;
         
         beforeEach(() => {
             material = new Material();
         });
 
-        // it('checks .SetTransparent without parameters ', () => {
-        //     material.SetTransparent();
-        //     expect(material.transparent).to.be.equal(false);
-        // });
-
-        // it('checks .SetTransparent with bad parameters ', () => {
-        //     material.SetTransparent("qw");
-        //     expect(material.transparent).to.be.equal(false);
-        // });
-
-        // it('checks .SetTransparent with good parameters ', () => {
-        //     material.SetTransparent("qw");
-        //     expect(material.transparent).to.be.equal(true);
-        // });
-    });
-
-    describe('.SetAffectedByLights', () => {
-        let material;
-        
-        beforeEach(() => {
-        });
-
         it('checks .SetAffectedByLights without parameters ', () => {
-        });
-
-        it('checks .SetAffectedByLights with bad parameters ', () => {
+            material.SetAffectedByLights();
+            expect(material.threeObject.lights).to.be.equal(false);
         });
 
         it('checks .SetAffectedByLights with good parameters ', () => {
+            material.SetAffectedByLights(null);
+            expect(material.threeObject.lights).to.be.equal(false);
+        });
+        
+        it('checks .SetAffectedByLights with bad parameters ', () => {
+            material.SetAffectedByLights("qwqeqew");
+            expect(material.threeObject.lights).to.be.equal(false);
+        });
+
+        it('checks .SetAffectedByLights with good parameters (true)', () => {
+            material.SetAffectedByLights(true);
+            expect(material.threeObject.lights).to.be.equal(true);
+        });
+
+        it('checks .SetAffectedByLights with good parameters (false) ', () => {
+            material.SetAffectedByLights(false);
+            expect(material.threeObject.lights).to.be.equal(false);
         });
     });
 });
