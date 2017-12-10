@@ -192,12 +192,4 @@ describe('GameObject', () => {
             expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(1);
         });
     });
-
-   /* describe('.AddPositionalAudio()', () => {
-        let gameObject;
-
-        beforeEach(() => {
-            gameObject = new GameObject();
-        });
-    });*/
 });

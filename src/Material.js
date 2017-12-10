@@ -21,7 +21,7 @@ class Material {
     // If the transparent value of the Material is not set to true, this will have no effect
     // 1.0 by default
     SetOpacity(opacity) {
-        if (!isNaN(opacity)) {
+        if (!isNaN(opacity) && (opacity >= 0 && opacity <= 1)) {
             this[threeMaterialSymbol].opacity = opacity;
         }
         else

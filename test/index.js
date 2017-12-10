@@ -561,6 +561,7 @@ describe('Camera', () => {
 });
 
 describe('Framework', () => {
+    require('./FrameworkTesting.js');
 });
 
 describe('GameObject', () => {
@@ -568,6 +569,7 @@ describe('GameObject', () => {
 });
 
 describe('Material', () => {
+    require('./MaterialTesting.js');
 });
 
 describe('ParticleSystem', () => {
