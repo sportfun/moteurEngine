@@ -573,6 +573,7 @@ describe('Material', () => {
 });
 
 describe('ParticleSystem', () => {
+    require('./ParticleSystemTesting.js');
 });
 
 describe('Scene', () => {
