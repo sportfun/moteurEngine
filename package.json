@@ -43,7 +43,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OmeletteDuFromage/moteurEngine.git"
+    "url": "git+https://github.com/sportfun/moteurEngine.git"
   },
   "keywords": [
     "es6"
@@ -51,7 +51,7 @@
   "author": "BoraxKid JanJan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/OmeletteDuFromage/moteurEngine/issues"
+    "url": "https://github.com/sportfun/moteurEngine/issues"
   },
-  "homepage": "https://github.com/OmeletteDuFromage/moteurEngine#readme"
+  "homepage": "https://github.com/sportfun/moteurEngine#readme"
 }
