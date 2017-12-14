@@ -111,19 +111,19 @@ let scaleParameters = {
 };
 
 let forceParameters = {
-    x: 0.1,
-    y: 0.1,
-    z: 0.1,
-    forceMode: true,
+    x: 0.0,
+    y: 0.0,
+    z: -0.05,
+    forceMode: false,
     applyButton: () => { rigidbody.SetForce(new Vector3(forceParameters.x, forceParameters.y, forceParameters.z), forceParameters.forceMode === true ? ForceMode.eConstant : ForceMode.eImpulse); },
     stopButton: () => { rigidbody.SetForce(new Vector3()); }
 };
 
 let torqueParameters = {
-    x: 0.1,
-    y: 0.1,
-    z: 0.1,
-    forceMode: true,
+    x: 0.0,
+    y: 0.02,
+    z: 0.0,
+    forceMode: false,
     applyButton: () => { rigidbody.SetTorque(new Vector3(torqueParameters.x, torqueParameters.y, torqueParameters.z), torqueParameters.forceMode === true ? ForceMode.eConstant : ForceMode.eImpulse); },
     stopButton: () => { rigidbody.SetTorque(new Vector3()); }
 };
