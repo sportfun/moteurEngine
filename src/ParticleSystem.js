@@ -5,6 +5,7 @@ let THREE = require('three');
 // eslint-disable-next-line
 import GPUParticleSystem from '../src/GPUParticleSystem.js';
 import GameObject from '../src/GameObject.js';
+import Vector3 from '../src/Physics/Vector3';
 /*
     Particle system wrapping class
 */
@@ -79,8 +80,11 @@ class ParticleSystem extends GameObject {
         param: (THREE.Vector3)
     */
     set Position(position) {
-        if (position instanceof THREE.Vector3)
-            this.particleSystem.position = position;
+        if (position instanceof THREE.Vector3 || position instanceof Vector3) {
+            this[particleSystemSybol].position.x = position.x;
+            this[particleSystemSybol].position.y = position.y;
+            this[particleSystemSybol].position.z = position.z;
+        }
     }
 
 
@@ -100,7 +104,7 @@ class ParticleSystem extends GameObject {
     */
 
     set Velocity(velocity) {
-        if (velocity instanceof THREE.Vector3)
+        if (velocity instanceof THREE.Vector3 || velocity instanceof Vector3)
             this.options.velocity = velocity;
     }
 
@@ -113,14 +117,15 @@ class ParticleSystem extends GameObject {
         if (velocityRandomness >= 0 && velocityRandomness <= 1)
             this.options.velocityRandomness = velocityRandomness;
     }
-    
+
     /*
         setter particles color 
         param: color (Hexa)
     */
 
     set Color(color) {
-        this.options.color = new THREE.color(color);
+        if (color !== undefined)
+            this.options.color = new THREE.Color(color);
     }
 
     /*
