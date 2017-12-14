@@ -2,7 +2,7 @@
 
 let THREE = require('three');
 
-import { log, logError } from '../src/Utils.js';
+import { log, logError, isValidType } from '../src/Utils.js';
 import GameObject from '../src/GameObject.js';
 
 let threeCameraSymbol = Symbol();
@@ -36,15 +36,15 @@ class Camera extends GameObject {
     // param: Vector3
     // Make the camera look at the given position
     LookAt(target) {
-        if (typeof target === 'undefined') {
+        if (typeof target === 'undefined' || target === null) {
             logError('Camera::LookAt: \'target\' is undefined');
             return;
         }
         if (typeof target.threeObject !== 'undefined')
             this[threeCameraSymbol].lookAt(target.threeObject);
-        else if (target instanceof THREE.Object3D)
+        else if (isValidType(target, 'THREE.Object3D'))
             this[threeCameraSymbol].lookAt(target.position);
-        else if (target instanceof THREE.Vector3)
+        else if (isValidType(target, 'THREE.Vector3'))
             this[threeCameraSymbol].lookAt(target);
         else
             log('Camera: LookAt\'s target is not valid');

@@ -2,6 +2,8 @@
 
 let expect = require('chai').expect;
 
+let THREE = require('three');
+
 import GameObject from '../src/GameObject.js';
 import Camera from '../src/Camera.js';
 
@@ -32,6 +34,52 @@ describe('Camera', () => {
         it('checks .threeObject is undefined', () => {
             camera.Clean();
             expect(camera.threeObject).to.be.undefined;
+        });
+    });
+    describe('.Update()', () => {
+        let camera;
+
+        beforeEach(() => {
+            camera = new Camera();
+        });
+
+        // it('no UpdateOverride', () => {
+        //     expect(camera.Update, 0).to.not.throw();
+        // });
+
+        // it('UpdateOverride', () => {
+        //     let passedIn = false;
+        //     camera.UpdateOverride = () => { passedIn = true; };
+        //     expect(camera.Update, 0).to.not.throw();
+        //     expect(passedIn).to.be.true;
+        // });
+    });
+    describe('.LookAt(target)', () => {
+        let camera;
+        
+        beforeEach(() => {
+            camera = new Camera();
+        });
+
+        it ('null parameter', () => {
+            expect(camera.LookAt, null).to.not.throw();
+        });
+
+        it ('undefined parameter', () => {
+            expect(camera.LookAt, undefined).to.not.throw();
+        });
+
+        it ('THREE.Object3D parameter', () => {
+            let cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.Material);
+            expect(camera.LookAt, cube).to.not.throw();
+        });
+
+        it ('THREE.Vector3 parameter', () => {
+            expect(camera.LookAt, new THREE.Vector3()).to.not.throw();
+        });
+
+        it ('GameObject parameter', () => {
+            expect(camera.LookAt, new GameObject()).to.not.throw();
         });
     });
     describe('.SetFOV(fov) / .GetFOV()', () => {
