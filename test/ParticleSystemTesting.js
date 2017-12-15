@@ -172,7 +172,7 @@ describe('ParticleSystem', () => {
         })
 
 
-        it('checks .ColorRandomness with value under 1', () => {
+        it('checks .ColorRandomness with value under 0', () => {
             particleSystem.ColorRandomness = -3;
             expect(particleSystem.options["colorRandomness"]).to.be.an('number').that.is.equal(0);
         })
@@ -202,7 +202,7 @@ describe('ParticleSystem', () => {
         })
 
 
-        it('checks .Turbulence with value under 1', () => {
+        it('checks .Turbulence with value under 0', () => {
             particleSystem.Turbulence = -9;
             expect(particleSystem.options["turbulence"]).to.be.an('number').that.is.equal(0.5);
         })
@@ -230,7 +230,7 @@ describe('ParticleSystem', () => {
             expect(particleSystem.options["lifetime"]).to.be.a('number').that.is.equal(2);
         })
 
-        it('checks .Lifetime with value under 1', () => {
+        it('checks .Lifetime with value under 0', () => {
             particleSystem.Lifetime = -3;
             expect(particleSystem.options["lifetime"]).to.be.an('number').that.is.equal(0);
         })
@@ -253,12 +253,12 @@ describe('ParticleSystem', () => {
             expect(particleSystem.options["size"]).to.be.a('number').that.is.equal(5);
         })
 
-        it('checks .Size with value under 1', () => {
+        it('checks .Size with value under 0', () => {
             particleSystem.Size = -300;
             expect(particleSystem.options["size"]).to.be.an('number').that.is.equal(0);
         })
 
-        it('checks .Size with value over 1', () => {
+        it('checks .Size with good value over 1', () => {
             particleSystem.Size = 10;
             expect(particleSystem.options["size"]).to.be.an('number').that.is.equal(10);
         })
@@ -292,5 +292,133 @@ describe('ParticleSystem', () => {
             expect(particleSystem.options["sizeRandomness"]).to.be.an('number').that.is.equal(0.3);
         })
     });
+
+    describe('.SpawnRate', () => {
+        let particleSystem;
+
+        beforeEach(() => {
+            particleSystem = new ParticleSystem();
+        });
+
+        it('checks .SpawnRate with undefined', () => {
+            particleSystem.SpawnRate = undefined;
+            expect(particleSystem.spawnerOptions["spawnRate"]).to.be.a('number').that.is.equal(15000);
+        })
+
+
+        it('checks .SpawnRate with value under 0', () => {
+            particleSystem.SpawnRate = -9;
+            expect(particleSystem.spawnerOptions["spawnRate"]).to.be.an('number').that.is.equal(0);
+        })
+
+        it('checks .SizeRandomness with good values between 0 and 10000000', () => {
+            particleSystem.SpawnRate = 320;
+            expect(particleSystem.spawnerOptions["spawnRate"]).to.be.an('number').that.is.equal(320);
+        })
+
+        it('checks .SpawnRate with good values between 0 and 1', () => {
+            particleSystem.SpawnRate = 0.3;
+            expect(particleSystem.spawnerOptions["spawnRate"]).to.be.an('number').that.is.equal(0.3);
+        })
+    });
+
+    describe('.HorizontalSpeed', () => {
+        let particleSystem;
+
+        beforeEach(() => {
+            particleSystem = new ParticleSystem();
+        });
+
+        it('checks .HorizontalSpeed with undefined', () => {
+            particleSystem.HorizontalSpeed = undefined;
+            expect(particleSystem.spawnerOptions["horizontalSpeed"]).to.be.a('number').that.is.equal(1.5);
+        })
+
+
+        it('checks .HorizontalSpeed with value under 0', () => {
+            particleSystem.HorizontalSpeed = -9;
+            expect(particleSystem.spawnerOptions["horizontalSpeed"]).to.be.an('number').that.is.equal(-9);
+        })
+
+        it('checks .HorizontalSpeed with good values between 0 and 10000000', () => {
+            particleSystem.HorizontalSpeed = 320;
+            expect(particleSystem.spawnerOptions["horizontalSpeed"]).to.be.an('number').that.is.equal(320);
+        })
+
+        it('checks .HorizontalSpeed with good values between 0 and 1', () => {
+            particleSystem.HorizontalSpeed = 0.3;
+            expect(particleSystem.spawnerOptions["horizontalSpeed"]).to.be.an('number').that.is.equal(0.3);
+        })
+
+        it('checks .HorizontalSpeed with good negatives value', () => {
+            particleSystem.HorizontalSpeed = -2;
+            expect(particleSystem.spawnerOptions["horizontalSpeed"]).to.be.an('number').that.is.equal(-2);
+        })
+    });
+
+    describe('.VerticalSpeed', () => {
+        let particleSystem;
+
+        beforeEach(() => {
+            particleSystem = new ParticleSystem();
+        });
+
+        it('checks .VerticalSpeed with undefined', () => {
+            particleSystem.VerticalSpeed = undefined;
+            expect(particleSystem.spawnerOptions["verticalSpeed"]).to.be.a('number').that.is.equal(1.33);
+        })
+
+
+        it('checks .VerticalSpeed with value under 0', () => {
+            particleSystem.VerticalSpeed = -9;
+            expect(particleSystem.spawnerOptions["verticalSpeed"]).to.be.an('number').that.is.equal(-9);
+        })
+
+        it('checks .VerticalSpeed with good values between 0 and 10000000', () => {
+            particleSystem.VerticalSpeed = 320;
+            expect(particleSystem.spawnerOptions["verticalSpeed"]).to.be.an('number').that.is.equal(320);
+        })
+
+        it('checks .VerticalSpeed with good values between 0 and 1', () => {
+            particleSystem.VerticalSpeed = 0.3;
+            expect(particleSystem.spawnerOptions["verticalSpeed"]).to.be.an('number').that.is.equal(0.3);
+        })
+
+        it('checks .VerticalSpeed with good negatives values', () => {
+            particleSystem.VerticalSpeed = -2;
+            expect(particleSystem.spawnerOptions["verticalSpeed"]).to.be.an('number').that.is.equal(-2);
+        })
+    });
+
+    describe('.TimeScale', () => {
+        let particleSystem;
+
+        beforeEach(() => {
+            particleSystem = new ParticleSystem();
+        });
+
+        it('checks .TimeScale with undefined', () => {
+            particleSystem.TimeScale = undefined;
+            expect(particleSystem.spawnerOptions["timeScale"]).to.be.a('number').that.is.equal(1);
+        })
+
+
+        it('checks .TimeScale with value under 0', () => {
+            particleSystem.TimeScale = -9;
+            expect(particleSystem.spawnerOptions["timeScale"]).to.be.a('number').that.is.equal(1);
+        })
+
+        it('checks .TimeScale with value over 1', () => {
+            particleSystem.TimeScale = 320;
+            expect(particleSystem.spawnerOptions["timeScale"]).to.be.a('number').that.is.equal(1);
+        })
+
+        it('checks .TimeScale with good values', () => {
+            particleSystem.TimeScale = 0.3;
+            expect(particleSystem.spawnerOptions["timeScale"]).to.be.a('number').that.is.equal(0.3);
+        })
+    });
+
+
 });
 

@@ -6,6 +6,7 @@ let THREE = require('three');
 import GPUParticleSystem from '../src/GPUParticleSystem.js';
 import GameObject from '../src/GameObject.js';
 import Vector3 from '../src/Physics/Vector3';
+import { SIGPWR } from 'constants';
 /*
     Particle system wrapping class
 */
@@ -191,7 +192,11 @@ class ParticleSystem extends GameObject {
     */
 
     set SpawnRate(spawnRate) {
-        this.spawnerOptions.spawnRate = spawnRate;
+        if (spawnRate !== undefined) {
+            if (spawnRate < 0)
+                spawnRate = 0;
+            this.spawnerOptions.spawnRate = spawnRate;
+        }
     }
 
     /*
@@ -200,7 +205,8 @@ class ParticleSystem extends GameObject {
     */
 
     set HorizontalSpeed(horizontalSpeed) {
-        this.spawnerOptions.horizontalSpeed = horizontalSpeed;
+        if (horizontalSpeed !== undefined)
+            this.spawnerOptions.horizontalSpeed = horizontalSpeed;
     }
 
     /*
@@ -209,7 +215,8 @@ class ParticleSystem extends GameObject {
     */
 
     set VerticalSpeed(verticalSpeed) {
-        this.spawnerOptions.verticalSpeed = verticalSpeed;
+        if (verticalSpeed !== undefined)
+            this.spawnerOptions.verticalSpeed = verticalSpeed;
     }
 
     /*
