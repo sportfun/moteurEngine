@@ -155,7 +155,11 @@ class ParticleSystem extends GameObject {
     */
 
     set Lifetime(lifetime) {
-        this.options.lifetime = lifetime;
+        if (lifetime !== undefined) {
+            if (lifetime < 0)
+                lifetime = 0;
+            this.options.lifetime = lifetime;
+        }
     }
 
     /*
@@ -164,7 +168,11 @@ class ParticleSystem extends GameObject {
     */
 
     set Size(size) {
-        this.options.size = size;
+        if (size !== undefined){
+            if (size < 0)
+                size = 0;
+            this.options.size = size;
+        }
     }
 
     /*
