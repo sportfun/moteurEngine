@@ -192,4 +192,20 @@ describe('GameObject', () => {
             expect(gameObject.GetScale().z).to.be.a("number").that.is.equal(1);
         });
     });
+
+    describe('.SetRigidbody', () =>{
+        let gameObject;
+        let light;
+
+        beforeEach(() => {
+            gameObject = new GameObject();
+            light = new THREE.HemisphereLight(0xFFFFFF, 0x444444, 1.0);
+            gameObject.threeObject = light;
+        });
+
+        it('checks .SetRigidbody with wrong undefined', () => {
+            gameObject.SetRigidbody(undefined);
+            expect(gameObject.threeObject.rigidbody).to.be.equal(undefined);
+        });
+    });
 });
