@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "babel-cli": "^6.24.1",
+    "cannon": "^0.6.2",
     "dat.gui": "^0.6.1",
     "three-fbx-loader": "^1.0.2",
     "three-js": "^79.0.0",
@@ -14,6 +15,7 @@
     "babel-cli": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
+    "cannon": "^0.6.2",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
     "css-loader": "^0.28.7",
@@ -21,6 +23,7 @@
     "eslint": "^4.0.0",
     "eslint-config-google": "^0.8.0",
     "html-loader": "^0.5.1",
+    "http-server": "^0.11.1",
     "isparta": "^4.0.0",
     "istanbul": "^1.0.0-alpha",
     "jsdom": "^11.3.0",
@@ -39,7 +42,8 @@
     "test": "mocha",
     "cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
-    "build": "babel src -d dist && webpack --display-error-details"
+    "build": "babel src -d dist && webpack --display-error-details",
+    "start": "http-server -p 9000"
   },
   "repository": {
     "type": "git",

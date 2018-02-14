@@ -1,6 +1,7 @@
 'use strict';
 
 let THREE = require('three');
+import CANNON from 'cannon';
 
 import { log } from '../src/Utils.js';
 import Scene from '../src/Scene.js';
@@ -20,6 +21,11 @@ class Framework {
         document.body.appendChild(this[threeRendererSymbol].domElement);
         this.clock = new THREE.Clock();
         this.currentScene = undefined;
+        this.world = new CANNON.World();
+        this.world.gravity.set(0, -10, 0);
+        this.lastTime = 0;
+        this.fixedTimeStep = 1.0 / 120.0;
+        this.maxSubSteps = 30;
         log('Framework successfully created');
     }
 
@@ -36,14 +42,25 @@ class Framework {
 
     Render() {
         requestAnimationFrame(() => this.Render()); // Just passing this.Render caused a 'not defined'
-        this.currentScene.Update(this.clock.getDelta());
+        this.time = this.clock.getDelta();
+        this.currentScene.Update(this.time);
         this[threeRendererSymbol].render(this.currentScene.threeObject, this.currentScene.camera.threeObject);
+        this.SimulatePhysics();
+    }
+
+    SimulatePhysics() {
+        if (this.lastTime !== 0) {
+            let dt = (this.time - this.lastTime) / 1000;
+            this.world.step(this.fixedTimeStep, dt, this.maxSubSteps);
+        }
+        this.lastTime = this.time;
     }
 
     // Create a Scene object, add it to the scenes and return it
     // param: string
     CreateScene(sceneName) {
         this.scenes.push(new Scene(sceneName));
+        this.scenes[this.scenes.length - 1].SetWorld(this.world);
         return (this.scenes[this.scenes.length - 1]);
     }
 
@@ -55,6 +72,7 @@ class Framework {
         if (!(scene instanceof Scene)) // Check if scene is a Scene object
             return;
         this.currentScene = scene;
+        this.currentScene.SetWorld(this.world);
     }
 
     // Handle resizing of the window

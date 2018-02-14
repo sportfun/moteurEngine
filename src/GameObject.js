@@ -3,9 +3,9 @@
 let THREE = require('three');
 
 import { logError, isValidType } from '../src/Utils.js';
-import Rigidbody from '../src/Physics/Rigidbody.js';
 
 let threeObject3DSymbol = Symbol();
+let cannonBodySymbol = Symbol();
 class GameObject {
 
     get threeObject() {
@@ -16,8 +16,17 @@ class GameObject {
         this[threeObject3DSymbol] = object;
     }
 
+    get cannonBody() {
+        return (this[cannonBodySymbol]);
+    }
+
+    set cannonBody(object) {
+        this[cannonBodySymbol] = object;
+    }
+
     constructor() {
         this[threeObject3DSymbol] = null;
+        this[cannonBodySymbol] = null;
     }
 
     // param: number
@@ -26,14 +35,23 @@ class GameObject {
     Update(elapsedDeltaTime) {
         if (typeof this.UpdateOverride === 'function')
             this.UpdateOverride(elapsedDeltaTime);
-        if (isValidType(this.rigidbody, 'Rigidbody'))
-            this.rigidbody.Update(elapsedDeltaTime);
+        if (this[cannonBodySymbol] !== null) {
+            this[threeObject3DSymbol].position.x = this[cannonBodySymbol].position.x;
+            this[threeObject3DSymbol].position.y = this[cannonBodySymbol].position.y;
+            this[threeObject3DSymbol].position.z = this[cannonBodySymbol].position.z;
+            this[threeObject3DSymbol].quaternion.x = this[cannonBodySymbol].quaternion.x;
+            this[threeObject3DSymbol].quaternion.y = this[cannonBodySymbol].quaternion.y;
+            this[threeObject3DSymbol].quaternion.z = this[cannonBodySymbol].quaternion.z;
+            this[threeObject3DSymbol].quaternion.w = this[cannonBodySymbol].quaternion.w;
+        }
+        // if (isValidType(this.rigidbody, 'Rigidbody'))
+        //     this.rigidbody.Update(elapsedDeltaTime);
     }
 
     // param: Rigidbody
     // Set a rigidbody to this GameObject
     SetRigidbody(rigidbody) {
-        if (rigidbody !== undefined){    
+        if (rigidbody !== undefined){
             if (isValidType(rigidbody, 'Rigidbody')) {
                 this.rigidbody = rigidbody;
                 this.rigidbody.SetGameObject(this);
@@ -42,7 +60,7 @@ class GameObject {
                 logError('GameObject::AddRigidbody: Can\'t add rigidbody of type ' + rigidbody.constructor.name);
             }
         }
-        else{
+        else {
             logError('GameObject::AddRigidbody: Can\'t add undefined rigidbody');
         }
     }
@@ -55,18 +73,32 @@ class GameObject {
     // param: THREE.Vector3
     SetPosition(position) {
         if (position && typeof position == 'object') {
-            this[threeObject3DSymbol].position.x = position.x;
-            this[threeObject3DSymbol].position.y = position.y;
-            this[threeObject3DSymbol].position.z = position.z;
+            if (this[cannonBodySymbol] !== null) {
+                this[cannonBodySymbol].position.x = position.x;
+                this[cannonBodySymbol].position.y = position.y;
+                this[cannonBodySymbol].position.z = position.z;
+            }
+            else {
+                this[threeObject3DSymbol].position.x = position.x;
+                this[threeObject3DSymbol].position.y = position.y;
+                this[threeObject3DSymbol].position.z = position.z;
+            }
         }
     }
 
     // param: THREE.Vector3
     Move(movement) {
         if (movement && typeof movement === 'object') {
-            this[threeObject3DSymbol].translateX(movement.x);
-            this[threeObject3DSymbol].translateY(movement.y);
-            this[threeObject3DSymbol].translateZ(movement.z);
+            if (this[cannonBodySymbol] !== null) {
+                this[cannonBodySymbol].position.x += movement.x;
+                this[cannonBodySymbol].position.y += movement.y;
+                this[cannonBodySymbol].position.z += movement.z;
+            }
+            else {
+                this[threeObject3DSymbol].translateX(movement.x);
+                this[threeObject3DSymbol].translateY(movement.y);
+                this[threeObject3DSymbol].translateZ(movement.z);
+            }
         }
     }
 
@@ -87,7 +119,7 @@ class GameObject {
 
     // param: THREE.Vector3
     Rotate(rotation) {
-        if (rotation && typeof rotation === "object"){
+        if (rotation && typeof rotation === 'object'){
             this[threeObject3DSymbol].rotateX(rotation.x);
             this[threeObject3DSymbol].rotateY(rotation.y);
             this[threeObject3DSymbol].rotateZ(rotation.z);
@@ -101,7 +133,7 @@ class GameObject {
 
     // param: THREE.Vector3
     SetScale(scale) {
-        if (scale && typeof scale === "object" && scale.x >= 0 && scale.y >= 0 && scale.z >= 0){
+        if (scale && typeof scale === 'object' && scale.x >= 0 && scale.y >= 0 && scale.z >= 0){
             this[threeObject3DSymbol].scale.x = scale.x;
             this[threeObject3DSymbol].scale.y = scale.y;
             this[threeObject3DSymbol].scale.z = scale.z;
@@ -110,7 +142,7 @@ class GameObject {
 
     // param: THREE.Vector3
     Scale(scale) {
-        if (scale && typeof scale === "object" && scale.x >= 0 && scale.y >= 0 && scale.z >= 0){
+        if (scale && typeof scale === 'object' && scale.x >= 0 && scale.y >= 0 && scale.z >= 0){
             this[threeObject3DSymbol].scale.x += scale.x;
             this[threeObject3DSymbol].scale.y += scale.y;
             this[threeObject3DSymbol].scale.z += scale.z;

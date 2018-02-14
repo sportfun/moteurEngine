@@ -69,6 +69,12 @@ class Scene {
             return;
         }
         if (object instanceof GameObject) {
+            if (object.cannonBody !== null) {
+                this.world.addBody(object.cannonBody);
+            }
+            else {
+                log('No cannonBody');
+            }
             this.objects.push(object);
             this[threeSceneSymbol].add(object.threeObject);
         }
@@ -99,6 +105,12 @@ class Scene {
 
     GetCameras() {
         return (this.cameras);
+    }
+
+    // param: CANNON.World
+    // Set the current physics simulated world
+    SetWorld(world) {
+        this.world = world;
     }
 
     // param: number
