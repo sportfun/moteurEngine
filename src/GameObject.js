@@ -36,13 +36,8 @@ class GameObject {
         if (typeof this.UpdateOverride === 'function')
             this.UpdateOverride(elapsedDeltaTime);
         if (this[cannonBodySymbol] !== null) {
-            this[threeObject3DSymbol].position.x = this[cannonBodySymbol].position.x;
-            this[threeObject3DSymbol].position.y = this[cannonBodySymbol].position.y;
-            this[threeObject3DSymbol].position.z = this[cannonBodySymbol].position.z;
-            this[threeObject3DSymbol].quaternion.x = this[cannonBodySymbol].quaternion.x;
-            this[threeObject3DSymbol].quaternion.y = this[cannonBodySymbol].quaternion.y;
-            this[threeObject3DSymbol].quaternion.z = this[cannonBodySymbol].quaternion.z;
-            this[threeObject3DSymbol].quaternion.w = this[cannonBodySymbol].quaternion.w;
+            this[threeObject3DSymbol].position.copy(this[cannonBodySymbol].position);
+            this[threeObject3DSymbol].quaternion.copy(this[cannonBodySymbol].quaternion);
         }
         // if (isValidType(this.rigidbody, 'Rigidbody'))
         //     this.rigidbody.Update(elapsedDeltaTime);
@@ -110,10 +105,15 @@ class GameObject {
     // param: THREE.Vector3
     SetRotation(rotation) {
         if (rotation && typeof rotation === 'object') {
-            this[threeObject3DSymbol].rotation.x = rotation.x;
-            this[threeObject3DSymbol].rotation.y = rotation.y;
-            this[threeObject3DSymbol].rotation.z = rotation.z;
-            this[threeObject3DSymbol].matrixAutoUpdate = true;
+            if (this[cannonBodySymbol] !== null) {
+                this[cannonBodySymbol].quaternion.setFromEuler(rotation.x * (Math.PI / 180), rotation.y * (Math.PI / 180), rotation.z * (Math.PI / 180));
+            }
+            else {
+                this[threeObject3DSymbol].rotation.x = rotation.x;
+                this[threeObject3DSymbol].rotation.y = rotation.y;
+                this[threeObject3DSymbol].rotation.z = rotation.z;
+                this[threeObject3DSymbol].matrixAutoUpdate = true;
+            }
         }
     }
 

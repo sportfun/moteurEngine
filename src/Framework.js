@@ -23,9 +23,9 @@ class Framework {
         this.currentScene = undefined;
         this.world = new CANNON.World();
         this.world.gravity.set(0, -10, 0);
-        this.lastTime = 0;
-        this.fixedTimeStep = 1.0 / 120.0;
-        this.maxSubSteps = 30;
+        this.world.broadphase = new CANNON.NaiveBroadphase();
+        this.world.solver.iterations = 10;
+        this.fixedTimeStep = 1.0 / 60.0;
         log('Framework successfully created');
     }
 
@@ -49,11 +49,7 @@ class Framework {
     }
 
     SimulatePhysics() {
-        if (this.lastTime !== 0) {
-            let dt = (this.time - this.lastTime) / 1000;
-            this.world.step(this.fixedTimeStep, dt, this.maxSubSteps);
-        }
-        this.lastTime = this.time;
+        this.world.step(this.fixedTimeStep);
     }
 
     // Create a Scene object, add it to the scenes and return it
