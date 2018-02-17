@@ -6,7 +6,7 @@
 let THREE = require('three');
 import CANNON from 'cannon';
 import dat from 'dat.gui/build/dat.gui.js';
-
+import { log } from '../src/Utils.js';
 import Framework from '../src/Framework.js';
 import Camera from '../src/Camera.js';
 import Material from '../src/Material.js';
@@ -20,6 +20,7 @@ let framework = new Framework();
 
 let currentScene = framework.CreateScene('Test scene');
 framework.UseScene(currentScene);
+
 currentScene.SetBackgroundColor(0x34495e);
 currentScene.SetBackgroundCubeTexture(new THREE.CubeTextureLoader() .setPath( 'resources/textures/skyboxes/' ) .load( [ 'sea_rt.jpg', 'sea_lf.jpg', 'sea_up.jpg', 'sea_dn.jpg', 'sea_bk.jpg', 'sea_ft.jpg' ] ));
 
@@ -46,10 +47,35 @@ currentScene.AddCamera(camera);
 let controls = new THREE.OrbitControls(camera.threeObject, framework.threeObject.domElement);
 controls.enableZoom = false;
 
+let balls = [];
+let ballShape = new CANNON.Sphere(2);
+let ballGeometry = new THREE.SphereGeometry(ballShape.radius, 32, 32);
+let ballMaterial = new Material();
+ballMaterial.threeObject.color = new THREE.Color(0xff0000);
+let shootDirection = new THREE.Vector3();
+let shootVelocity = 150;
+
+window.addEventListener('click', function(event) {
+    var ball = new GameObject();
+    let x = camera.threeObject.position.x;
+    let y = camera.threeObject.position.y;
+    let z = camera.threeObject.position.z;
+    log(x + ', ' + y + ', ' + z);
+    ball.threeObject = new THREE.Mesh(ballGeometry, ballMaterial.threeObject);
+    ball.cannonBody = new CANNON.Body({ mass: 1 });
+    ball.cannonBody.addShape(ballShape);
+    camera.threeObject.getWorldDirection(shootDirection);
+    log(shootDirection);
+    ball.cannonBody.velocity.set(shootDirection.x * shootVelocity, shootDirection.y * shootVelocity, shootDirection.z * shootVelocity);
+    ball.SetPosition(new Vector3(x, y, z));
+    currentScene.AddObject(ball);
+    balls.push(ball);
+});
+
 let geometry = new THREE.BoxGeometry(1, 1, 1);
 
 let material = new Material();
-
+material.threeObject.color = new THREE.Color(0x00ff00);
 let cube = new THREE.Mesh(geometry, material.threeObject);
 
 let cubeGameObject = new GameObject();
@@ -135,6 +161,11 @@ currentScene.LoadModel('./resources/models/skinman/xsi_man_skinning.fbx', modelL
         button: () => { planeGameObject.SetScale(new Vector3(scaleParameters.x, scaleParameters.y, scaleParameters.z)); }
     };
 
+    let ballParameters = {
+        velocity: 150,
+        button: () => { shootVelocity = this.velocity; }
+    };
+
     let posFolder = gui.addFolder('Position');
     posFolder.add(posParameters, 'x');
     posFolder.add(posParameters, 'y');
@@ -152,6 +183,10 @@ currentScene.LoadModel('./resources/models/skinman/xsi_man_skinning.fbx', modelL
     scaleFolder.add(scaleParameters, 'y');
     scaleFolder.add(scaleParameters, 'z');
     scaleFolder.add(scaleParameters, 'button').name('Apply');
+
+    let ballFolder = gui.addFolder('Ball');
+    ballFolder.add(ballParameters, 'velocity');
+    ballFolder.add(ballParameters, 'button').name('Apply');
 
     gui.open();
 }

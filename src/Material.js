@@ -11,6 +11,10 @@ class Material {
         return (this[threeMaterialSymbol]);
     }
 
+    set threeObject(object) {
+        this[threeMaterialSymbol] = object;
+    }
+
     constructor() {
         this[threeMaterialSymbol] = new THREE.MeshBasicMaterial({ color: 0x0000ff});
     }
