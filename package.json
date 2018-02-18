@@ -7,6 +7,8 @@
     "babel-cli": "^6.24.1",
     "cannon": "^0.6.2",
     "dat.gui": "^0.6.1",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
     "three-fbx-loader": "^1.0.2",
     "three-js": "^79.0.0",
     "webpack": "^2.6.1"
