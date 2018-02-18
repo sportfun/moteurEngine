@@ -167,6 +167,10 @@ class Scene {
         }
     }
 
+    SetFog(fog) {
+        this[threeSceneSymbol].fog = fog;
+    }
+
     // param: string, function(GameObject, (optional)boolean)
     // Load a 3D model and call the callback on completion
     // Return the GameObject

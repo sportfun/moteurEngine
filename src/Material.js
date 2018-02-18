@@ -16,7 +16,7 @@ class Material {
     }
 
     constructor() {
-        this[threeMaterialSymbol] = new THREE.MeshBasicMaterial({ color: 0x0000ff});
+        this[threeMaterialSymbol] = new THREE.MeshPhongMaterial({ color: 0x0000ff});
     }
 
     // param: number

@@ -14,7 +14,10 @@ class Framework {
     }
 
     constructor() {
-        this[threeRendererSymbol] = new THREE.WebGLRenderer();
+        this[threeRendererSymbol] = new THREE.WebGLRenderer({ antialias: true });
+        this[threeRendererSymbol].gammaInput = true;
+        this[threeRendererSymbol].gammaOutput = true;
+        this[threeRendererSymbol].shadowMap.enabled = true;
         this.scenes = [];
         this.OnWindowResize();
         window.addEventListener('resize', event => this.OnWindowResize(event), false);
