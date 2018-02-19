@@ -13,6 +13,7 @@ import Material from '../src/Material.js';
 import ParticleSystem from '../src/ParticleSystem.js';
 import GameObject from '../src/GameObject.js';
 import Vector3 from '../src/Physics/Vector3.js';
+import Network from '../src/Network.js';
 // eslint-disable-next-line
 import OrbitControls from '../js/controls/OrbitControls.js';
 
@@ -23,6 +24,13 @@ framework.UseScene(currentScene);
 
 currentScene.SetBackgroundColor(0x34495e);
 currentScene.SetBackgroundCubeTexture(new THREE.CubeTextureLoader().setPath('resources/textures/skyboxes/').load(['sea_rt.jpg', 'sea_lf.jpg', 'sea_up.jpg', 'sea_dn.jpg', 'sea_bk.jpg', 'sea_ft.jpg']));
+
+
+
+let users = new Network;
+let userData = { username: "test", password: "test"};
+users.connect(userData);
+
 
 let dirLight = new THREE.DirectionalLight(0xffffff, 1);
 dirLight.color.setHSL(0.1, 1, 0.95);
