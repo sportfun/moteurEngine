@@ -52,17 +52,17 @@ describe('Material', () => {
 
         it('checks .SetAffectedByLights without parameters ', () => {
             material.SetAffectedByLights();
-            expect(material.threeObject.lights).to.be.equal(false);
+            expect(material.threeObject.lights).to.be.equal(true);
         });
 
         it('checks .SetAffectedByLights with good parameters ', () => {
             material.SetAffectedByLights(null);
-            expect(material.threeObject.lights).to.be.equal(false);
+            expect(material.threeObject.lights).to.be.equal(true);
         });
         
         it('checks .SetAffectedByLights with bad parameters ', () => {
             material.SetAffectedByLights("qwqeqew");
-            expect(material.threeObject.lights).to.be.equal(false);
+            expect(material.threeObject.lights).to.be.equal(true);
         });
 
         it('checks .SetAffectedByLights with good parameters (true)', () => {
