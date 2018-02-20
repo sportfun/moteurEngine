@@ -3,13 +3,11 @@
 let io = require('socket.io-client');
 var ajax = require("node.ajax");
 
-// class Network {
-//     constructor() {
+// Class Network used to send and receive data from User input controller and RPM from Hardware
 
 class Network {
     constructor(){
-
-        this.serverAddress = "http://149.202.41.22:8080";
+        this.serverAddress = "http://api.sportsfun.shr.ovh:8080";
         this.routes = {
             login: "/api/user/login",
             register: "/api/user/register",
@@ -26,6 +24,9 @@ class Network {
         this.token = "";
     }
 
+    //connect method
+    //param : userData object {username: string, password: string}
+    // method who try to log in the current user with his identifiant in order to get his information
     connect(userDatas){
         let res = ajax(this.serverAddress + this.routes["login"], "POST", 
         { username:userDatas.username, password:userDatas.password},
@@ -35,8 +36,14 @@ class Network {
             this.token = res.data.token;
             console.log(this.token);
         }
+        else{
+            console.error("Connection failed error :" + res.error);
+        }
     }
 
+    // register method
+    // param RegisterDatas object {username: string, password: string, email: string, firstName: string, lastName: string, birthDate: date}
+    // method to register an user (dev only)
     register(RegisterDatas){
         let res = ajax(this.serverAddress + this.routes["register"], "POST", 
             {
@@ -45,8 +52,7 @@ class Network {
                 birthDate: RegisterDatas.birthDate
             },
             {'Content-Type': 'application/x-www-form-urlencoded'},
-            "utf8"
-        );
+            "utf8");
         if (res.success === true){
             console.log("Registering success");
         }
@@ -54,15 +60,23 @@ class Network {
             console.log("Registering failed.");
     }
 
+    // OnControllerData method
+    // param: none
+    // Method listener 'data' event to get all controllerInput sent from server
     OnControllerData(){
-        this.socket.on('data', (data) => {
-            console.log(data);
+        this.socket.on('data', (controllerInput) => {
+            console.log(controllerInput);
         })
     }
-};
-//socket.on('connect', () => { console.log('+ Client has connected to the server (149.202.41.22:8080).'); });
-//socket.on('hi', () => { console.log('hi'); });
-//socket.on('message', (data) => { console.log('  Client has received data from the server (149.202.41.22:8080): ', data); });
-//socket.on('disconnect', () => { console.log('- Client has disconnected to the server (149.202.41.22:8080).'); });
 
+    // OnRpm method
+    // param: none
+    // method listener 'rpm' event to get all Rpm sent from server
+    OnRpm(){
+        this.socket.on('rpm', (rpm) => {
+            console.log(rpm)
+        });
+    }
+
+};
  export default Network;
